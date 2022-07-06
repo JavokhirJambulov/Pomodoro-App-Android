@@ -71,7 +71,7 @@ object Constants {
     // Intent Action
     val BUTTON_ACTION = "button_action"
     // Source code
-    const val sourceCodeURL: String = "https://github.com/AdrianMiozga/GetFlow"
+    const val sourceCodeURL: String = "https://github.com/JavokhirJambulov/Pomodo-App-Android"
     const val feedbackURL = "mailto:javohirjambulov@gmail.com?subject=Feedback about %s"
     //Used to vibrate
     val POMODORO_OVER_BUZZ_PATTERN = longArrayOf(200, 100, 200,100,200,100)

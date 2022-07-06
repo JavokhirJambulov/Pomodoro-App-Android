@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Pomodoro</string>
+    <string name="play">O\'ynamoq</string>
+    <string name="channel_name" translatable="false">uz.javokhirjambulov.pomodoro.screen</string>
+    <string name="channel_description">PomodroApp</string>
+    <string name="start">Boshlash</string>
+    <string name="pause">Pauza</string>
+    <string name="resume">Davom etish</string>
+    <string name="skip">O\'tkazib yuborish</string>
+    <string name="continue_button">Davom etish</string>
+    <string name="stop">To\'xtatish</string>
+    <string name="quit">Tugatish</string>
+    <string name="about">Ilova haqida</string>
+    <string name="view_source_code_at_github">GitHub-da manba kodini ko\'ring</string>
+    <string name="send_feedback">Fikr-mulohaza yuboring</string>
+    <string name="troubleshooting">Muammolarni bartaraf qilish</string>
+    <string name="tutorial">Oʻquv qoʻllanma</string>
+    <string name="version_1_0_0">1.0.0 versiyasi</string>
+
+    <string name="intro_avoid_distractions">Chalg\'itadigan narsalardan saqlaning</string>
+    <string name="intro_avoid_distractions_description">Ilova tomonidan boshqariladigan vaqtli seanslar yordamida ishingizni davom ettiring.</string>
+    <string name="intro_clear_mind">Fikringizni tozalang</string>
+    <string name="intro_clear_mind_description">Qisqa tanaffuslar bilan o\'zingizni mukofotlang va yangilang.</string>
+    <string name="intro_get_started">Boshlash</string>
+    <string name="intro_get_started_description">Diqqatingizni jamlang, kechiktirishdan xalos bo\'ling va samaradorlikni oshiring.</string>
+    <string name="app_intro">Ilovaga kirish</string>
+    <string name="timer_type_pomodoro">Hozirda Pomodoroda</string>
+    <string name="timer_type_break">Hozirda Tanaffusda</string>
+    <string name="timer_type_completed">Tabriklaymiz Seans tugadi!</string>
+    <string name="timer_type_long_break">Hozirda Uzoq Tanaffusda</string>
+    <string name="pomodoro_in_progress_notification">Pomodoro davom etmoqda</string>
+    <string name="break_in_progress_notification">Tanaffus davom etmoqda</string>
+    <string name="long_break_in_progress_notification">Uzoq tanaffus davom etmoqda</string>
+    <string name="break_is_paused_notification">Tanaffus pauza qilindi</string>
+    <string name="long_break_is_paused_notification">Uzoq tanaffus pauza qilindi</string>
+    <string name="continue_notification">Davom ettirilsinmi?</string>
+    <string name="session_completed">Seans tugallandi</string>
+    <string name="pomodoro">Pomodoro</string>
+    <string name="menu">Menyu</string>
+    <string name="pomodoro_duration_min">Pomodoro davomiyligi (daq)</string>
+    <string name="break_duration_min">Tanaffus davomiyligi (daq)</string>
+    <string name="long_break_duration_min">Uzoq tanaffus davomiyligi (daq)</string>
+    <string name="sessions">Seanslar</string>
+    <string name="pomodoro_is_paused_notification">Pomodoro pauza qilindi</string>
+    <string name="ready_for_new_session">Yangi sessiyaga tayyor</string>
+
+
+</resources>

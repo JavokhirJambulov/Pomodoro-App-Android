@@ -2,7 +2,7 @@
     <string name="app_name">Pomodoro</string>
     <string name="play">Play</string>
     <string name="channel_name" translatable="false">uz.javokhirjambulov.pomodoro.screen</string>
-    <string name="channel_description">PomodroApp</string>
+    <string name="channel_description" translatable="false">PomodroApp</string>
     <string name="start">Start</string>
     <string name="pause">Pause</string>
     <string name="resume">Resume</string>
@@ -11,7 +11,7 @@
     <string name="stop">Stop</string>
     <string name="quit">Quit</string>
     <string name="about">About</string>
-    <string name="view_source_code_at_github">View source code at GitHub</string>
+    <string name="view_source_code_at_github">View source code on GitHub</string>
     <string name="send_feedback">Send feedback</string>
     <string name="troubleshooting">Troubleshooting</string>
     <string name="tutorial">Tutorial</string>

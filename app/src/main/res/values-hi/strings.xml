@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Pomodoro</string>
-    <string name="play">Play</string>
+    <string name="app_name">पोमोडोरो</string>
+    <string name="play">खेलें</string>
     <string name="channel_name" translatable="false">uz.javokhirjambulov.pomodoro.screen</string>
     <string name="channel_description">PomodroApp</string>
-    <string name="start">Start</string>
-    <string name="pause">Pause</string>
-    <string name="resume">Resume</string>
-    <string name="skip">Skip</string>
-    <string name="continue_button">Continue</string>
-    <string name="stop">Stop</string>
-    <string name="quit">Quit</string>
-    <string name="about">About</string>
-    <string name="view_source_code_at_github">View source code at GitHub</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="troubleshooting">Troubleshooting</string>
-    <string name="tutorial">Tutorial</string>
-    <string name="version_1_0_0">Version 1.0.0</string>
+    <string name="start">शुरू</string>
+    <string name="pause">रोकना</string>
+    <string name="resume">फिर शुरू करना</string>
+    <string name="skip">छोड़ें</string>
+    <string name="continue_button">जारी रखना</string>
+    <string name="stop">विराम</string>
+    <string name="quit">छोड़ना</string>
+    <string name="about">ऐप के बारे में</string>
+    <string name="view_source_code_at_github">GitHub पर स्रोत कोड देखें</string>
+    <string name="send_feedback">प्रतिक्रिया भेजें</string>
+    <string name="troubleshooting">समस्या निवारण</string>
+    <string name="tutorial">ट्यूटोरियल</string>
+    <string name="version_1_0_0">संस्करण 1.0.0</string>
 
-    <string name="intro_avoid_distractions">"Avoid distractions"</string>
-    <string name="intro_avoid_distractions_description">"Keep your work on track using timed sessions handled by the app."</string>
-    <string name="intro_clear_mind">"Clear your mind"</string>
-    <string name="intro_clear_mind_description">"Reward yourself with short breaks and get refreshed."</string>
-    <string name="intro_get_started">"Get started"</string>
-    <string name="intro_get_started_description">"Stay focused, get rid of procrastination and improve your productivity."</string>
-    <string name="app_intro">App intro</string>
-    <string name="timer_type_pomodoro">Currently in Pomodoro</string>
-    <string name="timer_type_break">Currently in Break</string>
-    <string name="timer_type_completed">Congratulations Session completed</string>
-    <string name="timer_type_long_break">Currently in Long Break</string>
-    <string name="pomodoro_in_progress_notification">Pomodoro in progress</string>
-    <string name="break_in_progress_notification">Break in progress</string>
-    <string name="long_break_in_progress_notification">Long Break in progress</string>
-    <string name="pomodoro_is_paused_notification">Pomodoro is paused</string>
-    <string name="break_is_paused_notification">Break is paused</string>
-    <string name="long_break_is_paused_notification">Long Break is paused</string>
-    <string name="continue_notification">Continue?</string>
-    <string name="session_completed">Session Completed</string>
-    <string name="pomodoro">Pomodoro</string>
-    <string name="menu">Menu</string>
-    <string name="pomodoro_duration_min">Pomodoro duration(min)</string>
-    <string name="break_duration_min">Break duration(min)</string>
-    <string name="long_break_duration_min">Long Break duration(min)</string>
-    <string name="sessions">Sessions</string>
+    <string name="intro_avoid_distractions">ध्यान भटकाने से बचें</string>
+    <string name="intro_avoid_distractions_description">ऐप द्वारा प्रबंधित समयबद्ध सत्रों का उपयोग करके अपने काम को ट्रैक पर रखें।</string>
+    <string name="intro_clear_mind">अपना दिमाग साफ़ करें</string>
+    <string name="intro_clear_mind_description">छोटे ब्रेक के साथ खुद को पुरस्कृत करें और तरोताजा हो जाएं।</string>
+    <string name="intro_get_started">शुरू हो जाओ</string>
+    <string name="intro_get_started_description">केंद्रित रहें, शिथिलता से छुटकारा पाएं और अपनी उत्पादकता में सुधार करें।</string>
+    <string name="app_intro">ऐप परिचय</string>
+    <string name="timer_type_pomodoro">वर्तमान में पोमोदोरोस में</string>
+    <string name="timer_type_break">वर्तमान में ब्रेक . में</string>
+    <string name="timer_type_completed">बधाई सत्र पूरा हुआ</string>
+    <string name="timer_type_long_break">अभी लॉन्ग ब्रेक में हैं</string>
+    <string name="pomodoro_in_progress_notification">पोमोडोरो प्रगति पर है</string>
+    <string name="break_in_progress_notification">विराम चल रहा है</string>
+    <string name="long_break_in_progress_notification">लंबा ब्रेक चल रहा है</string>
+    <string name="pomodoro_is_paused_notification">पोमोडोरो रुका हुआ है</string>
+    <string name="break_is_paused_notification">ब्रेक रुका हुआ है</string>
+    <string name="long_break_is_paused_notification">लंबा ब्रेक रुका हुआ है</string>
+    <string name="continue_notification">जारी रखना?</string>
+    <string name="session_completed">सत्र पूर्ण</string>
+    <string name="pomodoro">पोमोडोरो</string>
+    <string name="menu">मेन्यू</string>
+    <string name="pomodoro_duration_min">पोमोडोरो अवधि (मिनट)</string>
+    <string name="break_duration_min">ब्रेक अवधि (मिनट)</string>
+    <string name="long_break_duration_min">लंबी ब्रेक अवधि (मिनट)</string>
+    <string name="sessions">सत्र</string>
+    <string name="ready_for_new_session">नए सत्र के लिए तैयार</string>
 
 
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">포모도로</string>
+    <string name="play">놀다</string>
+    <string name="channel_name" translatable="false">uz.javokhirjambulov.pomodoro.screen</string>
+    <string name="channel_description">PomodroApp</string>
+    <string name="start">시작</string>
+    <string name="pause">정지시키다</string>
+    <string name="resume">이력서</string>
+    <string name="skip">건너뛰다</string>
+    <string name="continue_button">계속하다</string>
+    <string name="stop">중지</string>
+    <string name="quit">그만두다</string>
+    <string name="about">앱 정보</string>
+    <string name="view_source_code_at_github">GitHub에서 소스 코드 보기</string>
+    <string name="send_feedback">피드백 보내기</string>
+    <string name="troubleshooting">문제 해결</string>
+    <string name="tutorial">지도 시간</string>
+    <string name="version_1_0_0">버전 1.0.0</string>
+
+    <string name="intro_avoid_distractions">주의를 산만하게 하는 것을 피하십시오</string>
+    <string name="intro_avoid_distractions_description">앱에서 처리하는 시간 제한 세션을 사용하여 작업을 계속 진행하십시오.</string>
+    <string name="intro_clear_mind">마음을 비워</string>
+    <string name="intro_clear_mind_description">짧은 휴식으로 자신에게 보상하고 상쾌함을 받으세요.</string>
+    <string name="intro_get_started">시작하다</string>
+    <string name="intro_get_started_description">집중을 유지하고 미루는 것을 없애고 생산성을 향상시키십시오.</string>
+    <string name="app_intro">앱 소개</string>
+    <string name="timer_type_pomodoro">현재 뽀모도로에서</string>
+    <string name="timer_type_break">현재 휴식 중</string>
+    <string name="timer_type_completed">축하 세션 완료</string>
+    <string name="timer_type_long_break">현재 장기 휴식 중</string>
+    <string name="pomodoro_in_progress_notification">뽀모도로 진행 중</string>
+    <string name="break_in_progress_notification">브레이크 진행 중</string>
+    <string name="long_break_in_progress_notification">긴 휴식 진행 중</string>
+    <string name="pomodoro_is_paused_notification">뽀모도로가 일시 중지되었습니다.</string>
+    <string name="break_is_paused_notification">휴식이 일시 중지됨</string>
+    <string name="long_break_is_paused_notification">긴 휴식이 일시 중지되었습니다.</string>
+    <string name="continue_notification">계속하다?</string>
+    <string name="session_completed">세션 완료</string>
+    <string name="pomodoro">포모도로</string>
+    <string name="menu">메뉴</string>
+    <string name="pomodoro_duration_min">뽀모도로 지속시간(분)</string>
+    <string name="break_duration_min">휴식시간(분)</string>
+    <string name="long_break_duration_min">긴 휴식 시간(분)</string>
+    <string name="sessions">세션</string>
+    <string name="ready_for_new_session">새 세션 준비</string>
+</resources>
