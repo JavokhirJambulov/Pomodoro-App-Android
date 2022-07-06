@@ -13,6 +13,8 @@ import android.text.format.DateUtils
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -38,9 +40,9 @@ import kotlin.math.ln
 class MainActivity : AppCompatActivity(), IUpdateListener {
 
 
-    private var POMODOR_DEFAULT_TIME = 20L
+    private var POMODOR_DEFAULT_TIME = 1200L
 
-    //    private val constants = Constants()
+
     private val viewModel by viewModels<MainScreenViewModel>()
 
     private val notificationManager: MyNotificationManager by lazy {
@@ -51,17 +53,16 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
     private lateinit var preferencesPrivate: SharedPreferences
 
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        Log.i("MainActivity11","OnCreate")
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         preferencesPrivate = this.getSharedPreferences(
             this.packageName + "_private_preferences",
             Context.MODE_PRIVATE
         )
-        if(isFirstRun()){
+        if (isFirstRun()) {
             // show app intro
             val i = Intent(this, MainIntroActivity::class.java)
             startActivity(i)
@@ -70,7 +71,8 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         // Inflate view and obtain an instance of the binding class
-        binding = DataBindingUtil.setContentView(this,
+        binding = DataBindingUtil.setContentView(
+            this,
             R.layout.main_screen_fragment
         )
         binding.mainScreenViewModel = viewModel
@@ -88,8 +90,8 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
                 progress: Int, fromUser: Boolean
             ) {
                 // write custom code for progress is changed
-                val pomodoroTime = (progress * 5L) + 10L
-                viewModel.setPomodoroTime(pomodoroTime)
+                val pomodoroTime = (progress * 300L) + 600L
+                viewModel.setPomodoroTime(pomodoroTime / 60)
                 setProgressTime(pomodoroTime)
             }
 
@@ -108,8 +110,8 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
                 progress: Int, fromUser: Boolean
             ) {
                 // write custom code for progress is changed
-                val breakTime = progress * 3L + 3L
-                viewModel.setBreakTime(breakTime)
+                val breakTime = progress * 180L + 180L
+                viewModel.setBreakTime(breakTime / 60)
                 setProgressTime(breakTime)
             }
 
@@ -128,8 +130,8 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
                 progress: Int, fromUser: Boolean
             ) {
                 // write custom code for progress is changed
-                val longBreakTime = progress * 5L + 5L
-                viewModel.setLongBreakTime(longBreakTime)
+                val longBreakTime = progress * 300L + 300L
+                viewModel.setLongBreakTime(longBreakTime / 60)
                 setProgressTime(longBreakTime)
             }
 
@@ -165,9 +167,11 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
 
 
             Constants.setTimeLeftString(timeInSecond)
-            notificationManager.showNotification( Constants.timeLeftString,
+            notificationManager.showNotification(
+                Constants.timeLeftString,
                 Constants.currentStatus,
-                Constants.currentTimer)
+                Constants.currentTimer
+            )
 
 
             val timeTextAdapter =
@@ -184,9 +188,10 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
             Constants.setCurrentTimerType(currentTimer)
             notificationManager.showNotification(
                 Constants.timeLeftString,
-                Constants.currentStatus,currentTimer)
+                Constants.currentStatus, currentTimer
+            )
             when (currentTimer) {
-                TimerType.SESSION_NOT_STARTED_YET->{
+                TimerType.SESSION_NOT_STARTED_YET -> {
                     binding.timerType.text = getString(R.string.ready_for_new_session)
                 }
                 TimerType.POMODORO -> {
@@ -208,7 +213,11 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
 
         viewModel.timerStatus.observe(this) { timerStatus ->
             Constants.setCurrentState(timerStatus)
-            notificationManager.showNotification(Constants.timeLeftString,timerStatus, Constants.currentTimer)
+            notificationManager.showNotification(
+                Constants.timeLeftString,
+                timerStatus,
+                Constants.currentTimer
+            )
             when (timerStatus) {
                 TimerStatus.IN_PROGRESS -> {
                     visibleButton(TimerButton.PAUSE_BTN)
@@ -227,13 +236,13 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
 
         }
         viewModel.buzzEvent.observe(this) { buzzEvent ->
-            if(buzzEvent!= BuzzType.NO_BUZZ){
+            if (buzzEvent != BuzzType.NO_BUZZ) {
                 buzz(buzzEvent.pattern)
                 viewModel.onBuzzComplete()
             }
         }
-        viewModel.soundEvent.observe(this){ soundEvent->
-            if(soundEvent!= MediaType.NO_SOUND){
+        viewModel.soundEvent.observe(this) { soundEvent ->
+            if (soundEvent != MediaType.NO_SOUND) {
                 playMedia(soundEvent)
                 viewModel.onSoundComplete()
             }
@@ -262,7 +271,7 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
                 }
             })
         }
-        binding.menu.setOnClickListener{
+        binding.menu.setOnClickListener {
 
 
             val popup = PopupMenu(this, binding.menu)
@@ -294,20 +303,20 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
         )))
 
 
-        when(soundEvent){
-            MediaType.POMODORO_OVER->{
-                val mediaPlayer = MediaPlayer.create(this,R.raw.mixkit_phone_ring_bell)
+        when (soundEvent) {
+            MediaType.POMODORO_OVER -> {
+                val mediaPlayer = MediaPlayer.create(this, R.raw.mixkit_phone_ring_bell)
                 mediaPlayer.setVolume(volume.toFloat(), volume.toFloat())
                 mediaPlayer.start()
 
             }
-            MediaType.BREAK_OVER ->{
-                val mediaPlayer = MediaPlayer.create(this,R.raw.mixkit_achievement_bell)
+            MediaType.BREAK_OVER -> {
+                val mediaPlayer = MediaPlayer.create(this, R.raw.mixkit_achievement_bell)
                 mediaPlayer.setVolume(volume.toFloat(), volume.toFloat())
                 mediaPlayer.start()
             }
-            MediaType.LONG_BREAK_OVER->{
-                val mediaPlayer = MediaPlayer.create(this,R.raw.mixkit_bell_of_promise)
+            MediaType.LONG_BREAK_OVER -> {
+                val mediaPlayer = MediaPlayer.create(this, R.raw.mixkit_bell_of_promise)
                 mediaPlayer.setVolume(volume.toFloat(), volume.toFloat())
                 mediaPlayer.start()
             }
@@ -322,7 +331,7 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
         this.startActivity(intent)
     }
 
-    private fun setProgressTime(time:Long){
+    private fun setProgressTime(time: Long) {
         val timeLeftString = DateUtils.formatElapsedTime(time)
         val timeTextAdapter =
             CircularProgressIndicator.ProgressTextAdapter { timeLeftString }
@@ -357,6 +366,7 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
             else -> {}
         }
     }
+
     private fun buzz(pattern: LongArray) {
         val buzzer = getSystemService<Vibrator>()
 
@@ -373,40 +383,36 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
 
     override fun onResume() {
         super.onResume()
-        Log.i("MainActivity","OnResume")
         Constants.addListener(this)
-        notificationManager.showNotification( Constants.timeLeftString,
+        notificationManager.showNotification(
+            Constants.timeLeftString,
             Constants.currentStatus,
-            Constants.currentTimer)
+            Constants.currentTimer
+        )
     }
 
     override fun onPause() {
         super.onPause()
-        Log.i("MainActivity11","OnPause")
         Constants.removeListener(this)
     }
 
     override fun onStop() {
         super.onStop()
-        Log.i("MainActivity11","OnStop")
         notificationManager.clearNotification()
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            notificationManager.clearNotificationChannel()
-//        }
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("MainActivity11","OnDestroy")
-//        notificationManager.clearNotification()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.clearNotificationChannel()
         }
     }
+
     private fun isFirstRun() = preferencesPrivate.getBoolean(Constants.FIRST_RUN, true)
 
-    private fun consumeFirstRun() = preferencesPrivate.edit().putBoolean(Constants.FIRST_RUN, false).apply()
+    private fun consumeFirstRun() =
+        preferencesPrivate.edit().putBoolean(Constants.FIRST_RUN, false).apply()
 
 }
 
