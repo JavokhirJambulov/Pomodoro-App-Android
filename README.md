@@ -19,12 +19,19 @@ While using this app, you will avoid distractions and focus on your own task bec
 
 ## Features of this app:
 • No ads
+
 • No tracking or personal data collection
+
 • Open-source
+
 • Lightweight
+
 • Configurable timer
+
 • Long breaks after a number of completed work sessions
+
 • Supports four languages: English, Korean, Hindi, and Uzbek
+
 ## Suggestions, questions, contact
 For any suggestions or questions, feel free to contact me by email: javohirjambulov@gmail.com
 ## Licence
