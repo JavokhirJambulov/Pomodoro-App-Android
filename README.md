@@ -7,7 +7,7 @@ It helps you to be more productive by implementing the POMODORO technique.
 
 While using this app, you will avoid distractions and focus on your own task because the main goal of the app is to learn how to use your time wisely and limit procrastination to achieve great results in your work.
 
-##How to use:
+## How to use:
 
 1. Make a list of your tasks.
 
@@ -17,7 +17,7 @@ While using this app, you will avoid distractions and focus on your own task bec
 
 4. Repeat this Pomodoro/Break cycle as long as you feel productive.
 
-##Features of this app:
+## Features of this app:
 • No ads
 • No tracking or personal data collection
 • Open-source
