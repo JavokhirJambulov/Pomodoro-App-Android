@@ -7,6 +7,15 @@ It helps you to be more productive by implementing the POMODORO technique.
 
 While using this app, you will avoid distractions and focus on your own task because the main goal of the app is to learn how to use your time wisely and limit procrastination to achieve great results in your work.
 
+## Tools used:
+MVVM Android Architecture,
+Android Architecture Components (AAC):
+ -Data Binding
+ -ViewModel
+ -LiveData
+-Broadcast Receiver
+-Notification
+
 ## How to use:
 
 1. Make a list of your tasks.
@@ -29,6 +38,8 @@ While using this app, you will avoid distractions and focus on your own task bec
 • Configurable timer
 
 • Long breaks after a number of completed work sessions
+
+• Vibrates and plays sound after the completion of each timer.
 
 • Supports four languages: English, Korean, Hindi, and Uzbek
 
