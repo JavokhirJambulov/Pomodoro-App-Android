@@ -1,8 +1,9 @@
-# Pomodo-App-Android
+# Pomodoro-App-Android
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
     alt="Get it on Google Play"
     height="80">](https://play.google.com/store/apps/details?id=uz.javokhirjambulov.pomodoro)
- It helps you to be more productive by implementing the POMODORO technique.
+ 
+It helps you to be more productive by implementing the POMODORO technique.
 
 While using this app, you will avoid distractions and focus on your own task because the main goal of the app is to learn how to use your time wisely and limit procrastination to achieve great results in your work.
 
