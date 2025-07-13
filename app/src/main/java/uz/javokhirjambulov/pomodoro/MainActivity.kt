@@ -4,28 +4,26 @@ package uz.javokhirjambulov.pomodoro
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
+import uz.javokhirjambulov.pomodoro.service.ForegroundTimerService
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.widget.SeekBar
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.ActivityNavigator
-import androidx.navigation.Navigation
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import uz.javokhirjambulov.pomodoro.commons.*
@@ -34,27 +32,27 @@ import uz.javokhirjambulov.pomodoro.screen.AboutActivity
 import uz.javokhirjambulov.pomodoro.screen.MainIntroActivity
 import uz.javokhirjambulov.pomodoro.screen.MainScreenViewModel
 import kotlin.math.ln
+import androidx.core.content.edit
 
 
-@RequiresApi(Build.VERSION_CODES.M)
 class MainActivity : AppCompatActivity(), IUpdateListener {
 
-
     private var POMODOR_DEFAULT_TIME = 1200L
-
-
     private val viewModel by viewModels<MainScreenViewModel>()
-
     private val notificationManager: MyNotificationManager by lazy {
         MyNotificationManager(applicationContext)
     }
-
     private lateinit var binding: MainScreenFragmentBinding
     private lateinit var preferencesPrivate: SharedPreferences
 
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1001)
+            }
+        }
+
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -164,15 +162,14 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
         })
 
         viewModel.timeInSecond.observe(this) { timeInSecond ->
-
-
             Constants.setTimeLeftString(timeInSecond)
-            notificationManager.showNotification(
-                Constants.timeLeftString,
-                Constants.currentStatus,
-                Constants.currentTimer
-            )
-
+            if (Constants.currentTimer !== TimerType.SESSION_NOT_STARTED_YET) {
+                notificationManager.showNotification(
+                    Constants.timeLeftString,
+                    Constants.currentStatus,
+                    Constants.currentTimer
+                )
+            }
 
             val timeTextAdapter =
                 CircularProgressIndicator.ProgressTextAdapter { Constants.timeLeftString }
@@ -184,12 +181,15 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
         }
 
 
-        viewModel.currentTimer.observe(this) { currentTimer ->
+        viewModel.currentTimer.observe(this)
+        { currentTimer ->
             Constants.setCurrentTimerType(currentTimer)
-            notificationManager.showNotification(
-                Constants.timeLeftString,
-                Constants.currentStatus, currentTimer
-            )
+            if (Constants.currentTimer !== TimerType.SESSION_NOT_STARTED_YET) {
+                notificationManager.showNotification(
+                    Constants.timeLeftString,
+                    Constants.currentStatus, currentTimer
+                )
+            }
             when (currentTimer) {
                 TimerType.SESSION_NOT_STARTED_YET -> {
                     binding.timerType.text = getString(R.string.ready_for_new_session)
@@ -211,13 +211,16 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
         }
 
 
-        viewModel.timerStatus.observe(this) { timerStatus ->
+        viewModel.timerStatus.observe(this)
+        { timerStatus ->
             Constants.setCurrentState(timerStatus)
-            notificationManager.showNotification(
-                Constants.timeLeftString,
-                timerStatus,
-                Constants.currentTimer
-            )
+            if (Constants.currentTimer !== TimerType.SESSION_NOT_STARTED_YET) {
+                notificationManager.showNotification(
+                    Constants.timeLeftString,
+                    timerStatus,
+                    Constants.currentTimer
+                )
+            }
             when (timerStatus) {
                 TimerStatus.IN_PROGRESS -> {
                     visibleButton(TimerButton.PAUSE_BTN)
@@ -272,26 +275,36 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
             })
         }
         binding.menu.setOnClickListener {
-
-
             val popup = PopupMenu(this, binding.menu)
-
             popup.menuInflater.inflate(R.menu.menu, popup.menu)
-
             popup.setOnMenuItemClickListener { item: MenuItem ->
                 when (item.itemId) {
                     R.id.about -> {
                         startAboutActivity()
-
-
                         return@setOnMenuItemClickListener true
                     }
                 }
                 false
             }
-
             popup.show()
         }
+        binding.startButton.setOnClickListener {
+            viewModel.beginTimer()
+            startForegroundService()
+        }
+        binding.quitButton.setOnClickListener {
+            viewModel.stopTimer()
+            stopTimerService()
+        }
+    }
+
+    private fun startForegroundService() {
+        // Start foreground service for persistent notification
+        val serviceIntent = Intent(this, ForegroundTimerService::class.java).apply {
+            putExtra("timerType", TimerType.POMODORO)
+            putExtra("timerStatus", TimerStatus.IN_PROGRESS)
+        }
+        ContextCompat.startForegroundService(this, serviceIntent)
 
     }
 
@@ -362,6 +375,7 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
             Constants.notificationStop -> {
                 viewModel.stopTimer()
                 notificationManager.clearNotification()
+                stopTimerService()
             }
             else -> {}
         }
@@ -384,11 +398,13 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
     override fun onResume() {
         super.onResume()
         Constants.addListener(this)
-        notificationManager.showNotification(
-            Constants.timeLeftString,
-            Constants.currentStatus,
-            Constants.currentTimer
-        )
+        if (Constants.currentTimer !== TimerType.SESSION_NOT_STARTED_YET) {
+            notificationManager.showNotification(
+                Constants.timeLeftString,
+                Constants.currentStatus,
+                Constants.currentTimer
+            )
+        }
     }
 
     override fun onPause() {
@@ -401,18 +417,20 @@ class MainActivity : AppCompatActivity(), IUpdateListener {
         notificationManager.clearNotification()
     }
 
+    private fun stopTimerService() {
+        val intent = Intent(this, ForegroundTimerService::class.java)
+        stopService(intent)
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.clearNotificationChannel()
-        }
+        stopTimerService()
     }
 
     private fun isFirstRun() = preferencesPrivate.getBoolean(Constants.FIRST_RUN, true)
 
     private fun consumeFirstRun() =
-        preferencesPrivate.edit().putBoolean(Constants.FIRST_RUN, false).apply()
+        preferencesPrivate.edit() { putBoolean(Constants.FIRST_RUN, false) }
 
 }
 

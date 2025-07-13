@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uz.javokhirjambulov.pomodoro">
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:name=".App"
@@ -19,7 +21,6 @@
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,6 +30,10 @@
             android:theme="@style/CustomActionBarTheme"
             android:screenOrientation="sensorPortrait">
         </activity>
+        <service
+            android:name=".service.ForegroundTimerService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
         <activity android:name=".screen.MainIntroActivity"/>
         <receiver android:name=".ActionReceiver" />
     </application>

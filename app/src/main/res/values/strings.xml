@@ -43,6 +43,4 @@
     <string name="long_break_duration_min">Long Break duration(min)</string>
     <string name="sessions">Sessions</string>
     <string name="ready_for_new_session">Ready for New Session</string>
-
-
 </resources>

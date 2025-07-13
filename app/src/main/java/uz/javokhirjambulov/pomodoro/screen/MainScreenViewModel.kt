@@ -1,6 +1,5 @@
 package uz.javokhirjambulov.pomodoro.screen
 
-import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -10,6 +9,7 @@ import uz.javokhirjambulov.pomodoro.commons.BuzzType
 import uz.javokhirjambulov.pomodoro.commons.MediaType
 import uz.javokhirjambulov.pomodoro.commons.TimerStatus
 import uz.javokhirjambulov.pomodoro.commons.TimerType
+import androidx.lifecycle.map
 
 class MainScreenViewModel : ViewModel() {
 
@@ -29,21 +29,23 @@ class MainScreenViewModel : ViewModel() {
     val timerStatus: LiveData<TimerStatus> get() = _timerStatus
 
     private val _pomodoroTime = MutableLiveData(POMODOR_DEFAULT_TIME)
-    val pomodoroTimeString: LiveData<String> =
-        Transformations.map(_pomodoroTime) { time -> time.toString() }
-
+    val pomodoroTimeString: LiveData<String> = _pomodoroTime.map { time ->
+        time.toString()
+    }
     private val _breakTime = MutableLiveData(BREAK_DEFAULT_TIME)
-    val breakTimeString: LiveData<String> =
-        Transformations.map(_breakTime) { time -> time.toString() }
+    val breakTimeString: LiveData<String> = _breakTime.map { time ->
+        time.toString()
+    }
 
     private val _longBreakTime = MutableLiveData(LONG_BREAK_DEFAULT_TIME)
-    val longBreakTimeString: LiveData<String> =
-        Transformations.map(_longBreakTime) { time -> time.toString() }
+    val longBreakTimeString: LiveData<String> = _longBreakTime.map { time->
+        time.toString()
+    }
 
     private val _sessions = MutableLiveData(SESSION_DEFAULT)
-    val sessionsString: LiveData<String> =
-        Transformations.map(_sessions) { time -> time.toString() }
-
+    val sessionsString: LiveData<String> =_sessions.map { time->
+        time.toString()
+    }
 
     private val _sessionCounter = MutableLiveData(0L)
 
@@ -123,8 +125,6 @@ class MainScreenViewModel : ViewModel() {
 
             }
         }
-
-
     }
 
     private fun checkTimer() {

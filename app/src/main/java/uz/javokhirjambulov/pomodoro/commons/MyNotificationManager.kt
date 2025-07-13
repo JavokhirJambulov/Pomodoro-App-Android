@@ -1,31 +1,23 @@
 package uz.javokhirjambulov.pomodoro.commons
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import uz.javokhirjambulov.pomodoro.ActionReceiver
 import uz.javokhirjambulov.pomodoro.MainActivity
 import uz.javokhirjambulov.pomodoro.R
 
-@RequiresApi(Build.VERSION_CODES.M)
 class MyNotificationManager(private val context: Context) {
-    private val builder: NotificationCompat.Builder
     private val channel_ID = "CHANNEL_ID"
-
-    //    private val constants = Constants()
     private val notificationManager by lazy {
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-
     private fun createActivityIntent(): PendingIntent {
-        // Create an explicit intent for an Activity in your app
         val intent = Intent(context, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -37,13 +29,23 @@ class MyNotificationManager(private val context: Context) {
         )
     }
 
-    @SuppressLint("RestrictedApi")
-    private fun getNotification(
+    fun getNotification(
         contentText: String? = null,
         timerStatus: TimerStatus,
         timerType: TimerType
     ): NotificationCompat.Builder {
-        builder.mActions.clear()
+        val builder = NotificationCompat.Builder(context, channel_ID)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(context.getString(R.string.app_name))
+            .setContentIntent(createActivityIntent())
+            .setOngoing(true)
+            .setShowWhen(false)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setOnlyAlertOnce(true)
+            .setContentText(contentText)
+
         builder.apply {
             if (timerType != TimerType.SESSION_NOT_STARTED_YET) {
                 when (timerType) {
@@ -51,13 +53,10 @@ class MyNotificationManager(private val context: Context) {
                         if (timerStatus == TimerStatus.IN_PROGRESS) {
                             addAction(buildPauseAction(context))
                             setContentTitle(context.getString(R.string.pomodoro_in_progress_notification))
-                            if (contentText?.isNotEmpty() == true) {
-                                setContentText(contentText)
-                            }
+
                         } else {
                             addAction(buildResumeAction(context))
                             setContentTitle(context.getString(R.string.pomodoro_is_paused_notification))
-                            setContentText(context.getString(R.string.continue_notification))
                         }
                         addAction(buildStopAction(context))
                     }
@@ -65,45 +64,33 @@ class MyNotificationManager(private val context: Context) {
                         if (timerStatus == TimerStatus.IN_PROGRESS) {
                             addAction(buildPauseAction(context))
                             setContentTitle(context.getString(R.string.break_in_progress_notification))
-                            if (contentText?.isNotEmpty() == true) {
-                                setContentText(contentText)
-                            }
+
                         } else {
                             addAction(buildResumeAction(context))
                             setContentTitle(context.getString(R.string.break_is_paused_notification))
-                            setContentText(context.getString(R.string.continue_notification))
                         }
                         addAction(buildStopAction(context))
-
 
                     }
                     TimerType.LONG_BREAK -> {
                         if (timerStatus == TimerStatus.IN_PROGRESS) {
                             addAction(buildPauseAction(context))
                             setContentTitle(context.getString(R.string.long_break_in_progress_notification))
-                            if (contentText?.isNotEmpty() == true) {
-                                setContentText(contentText)
-                            }
+
                         } else {
                             addAction(buildResumeAction(context))
                             setContentTitle(context.getString(R.string.long_break_is_paused_notification))
-                            setContentText(context.getString(R.string.continue_notification))
                         }
                         addAction(buildStopAction(context))
-
-
                     }
                     else -> {
                         setContentTitle(context.getString(R.string.session_completed))
-                        setContentText(context.getString(R.string.continue_notification))
                         addAction(buildResumeAction(context))
                         addAction(buildStopAction(context))
                     }
                 }
             }
-
         }
-
         return builder
     }
 
@@ -111,23 +98,14 @@ class MyNotificationManager(private val context: Context) {
         notificationManager.cancelAll()
     }
 
-    fun clearNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.deleteNotificationChannel(channel_ID)
-        }
-    }
-
-
     fun showNotification(
         contentText: String? = null,
         timerStatus: TimerStatus,
         timerType: TimerType
     ) {
-
         notificationManager.notify(
             Constants.POMODORO_NOTIFICATION_ID,
-            getNotification(contentText, timerStatus, timerType).setOnlyAlertOnce(true)
-                .build()
+            getNotification(contentText, timerStatus, timerType).build()
         )
     }
 
@@ -236,22 +214,5 @@ class MyNotificationManager(private val context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initChannels()
         }
-
-        builder = NotificationCompat.Builder(context, "CHANNEL_ID")
-            .apply {
-                setSmallIcon(R.mipmap.ic_launcher)
-                setContentTitle(context.getString(R.string.app_name))
-                priority = NotificationCompat.PRIORITY_HIGH
-                setCategory(NotificationCompat.CATEGORY_PROGRESS)
-                setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                // Set the intent that will fire when the user taps the notification
-                setContentIntent(createActivityIntent())
-                setOngoing(true)
-                setShowWhen(false)
-
-            }
-
     }
-
-
 }
