@@ -32,10 +32,13 @@
         </activity>
         <service
             android:name=".service.ForegroundTimerService"
+            android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
+        <receiver android:name=".ActionReceiver"
+            android:enabled="true"
+            android:exported="false" />
         <activity android:name=".screen.MainIntroActivity"/>
-        <receiver android:name=".ActionReceiver" />
     </application>
 
 </manifest>

@@ -1,6 +1,9 @@
 package uz.javokhirjambulov.pomodoro.screen
 
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.heinrichreimersoftware.materialintro.app.IntroActivity
 import com.heinrichreimersoftware.materialintro.slide.SimpleSlide
 import uz.javokhirjambulov.pomodoro.R
@@ -40,5 +43,11 @@ class MainIntroActivity: IntroActivity() {
                 .layout(R.layout.activity_main_intro)
                 .build()
         )
+        val root = findViewById<View>(android.R.id.content)
+        ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
     }
 }
