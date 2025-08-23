@@ -32,12 +32,7 @@ class MainScreenViewModel : ViewModel() {
         time.toString()
     }
 
-    // UI feedback events
-    private var _buzzEvent = MutableLiveData<BuzzType>(BuzzType.NO_BUZZ)
-    val buzzEvent: LiveData<BuzzType> get() = _buzzEvent
 
-    private var _soundEvent = MutableLiveData<MediaType>(MediaType.NO_SOUND)
-    val soundEvent: LiveData<MediaType> get() = _soundEvent
 
     fun setPomodoroTime(time: Long) {
         _pomodoroTime.value = time
@@ -53,21 +48,5 @@ class MainScreenViewModel : ViewModel() {
 
     fun setSessions(session: Long) {
         _sessions.value = session
-    }
-
-    fun triggerBuzz(buzzType: BuzzType) {
-        _buzzEvent.value = buzzType
-    }
-
-    fun triggerSound(mediaType: MediaType) {
-        _soundEvent.value = mediaType
-    }
-
-    fun onBuzzComplete() {
-        _buzzEvent.value = BuzzType.NO_BUZZ
-    }
-
-    fun onSoundComplete() {
-        _soundEvent.value = MediaType.NO_SOUND
     }
 }

@@ -2,12 +2,9 @@ package uz.javokhirjambulov.pomodoro
 
 import android.content.*
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.text.format.DateUtils
 import android.view.MenuItem
 import android.view.View
@@ -18,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
@@ -29,7 +25,6 @@ import uz.javokhirjambulov.pomodoro.screen.AboutActivity
 import uz.javokhirjambulov.pomodoro.screen.MainIntroActivity
 import uz.javokhirjambulov.pomodoro.screen.MainScreenViewModel
 import uz.javokhirjambulov.pomodoro.service.ForegroundTimerService
-import kotlin.math.ln
 import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -55,12 +50,6 @@ class MainActivity : AppCompatActivity() {
             timerService?.setTimerUpdateCallback { timeInSeconds, timerType, timerStatus ->
                 runOnUiThread {
                     updateUI(timeInSeconds, timerType, timerStatus)
-                }
-            }
-
-            timerService?.setTimerCompleteCallback { timerType ->
-                runOnUiThread {
-                    handleTimerComplete(timerType)
                 }
             }
 
@@ -156,21 +145,6 @@ class MainActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seek: SeekBar) {}
             override fun onStopTrackingTouch(seek: SeekBar) {}
         })
-
-        // ViewModel observers for UI updates only
-        viewModel.buzzEvent.observe(this) { buzzEvent ->
-            if (buzzEvent != BuzzType.NO_BUZZ) {
-                buzz(buzzEvent.pattern)
-                viewModel.onBuzzComplete()
-            }
-        }
-
-        viewModel.soundEvent.observe(this) { soundEvent ->
-            if (soundEvent != MediaType.NO_SOUND) {
-                playMedia(soundEvent)
-                viewModel.onSoundComplete()
-            }
-        }
 
         setupBottomSheet(bottomSheetBehavior)
         setupButtons()
@@ -312,49 +286,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleTimerComplete(timerType: TimerType) {
-        when (timerType) {
-            TimerType.POMODORO -> {
-                viewModel.triggerBuzz(BuzzType.POMODORO_OVER)
-                viewModel.triggerSound(MediaType.POMODORO_OVER)
-            }
-            TimerType.BREAK -> {
-                viewModel.triggerBuzz(BuzzType.BREAK_OVER)
-                viewModel.triggerSound(MediaType.BREAK_OVER)
-            }
-            TimerType.LONG_BREAK -> {
-                viewModel.triggerBuzz(BuzzType.LONG_BREAK_OVER)
-                viewModel.triggerSound(MediaType.LONG_BREAK_OVER)
-            }
-            else -> {}
-        }
-    }
-
-    private fun playMedia(soundEvent: MediaType?) {
-        val MAX_VOLUME = 100
-        val soundVolume = 10
-        val volume: Double = (1 - (ln((MAX_VOLUME - soundVolume).toDouble()) / ln(MAX_VOLUME.toDouble())))
-
-        when (soundEvent) {
-            MediaType.POMODORO_OVER -> {
-                val mediaPlayer = MediaPlayer.create(this, R.raw.mixkit_phone_ring_bell)
-                mediaPlayer.setVolume(volume.toFloat(), volume.toFloat())
-                mediaPlayer.start()
-            }
-            MediaType.BREAK_OVER -> {
-                val mediaPlayer = MediaPlayer.create(this, R.raw.mixkit_achievement_bell)
-                mediaPlayer.setVolume(volume.toFloat(), volume.toFloat())
-                mediaPlayer.start()
-            }
-            MediaType.LONG_BREAK_OVER -> {
-                val mediaPlayer = MediaPlayer.create(this, R.raw.mixkit_bell_of_promise)
-                mediaPlayer.setVolume(volume.toFloat(), volume.toFloat())
-                mediaPlayer.start()
-            }
-            else -> {}
-        }
-    }
-
     private fun startAboutActivity() {
         val intent = Intent(this, AboutActivity::class.java)
         this.startActivity(intent)
@@ -373,17 +304,6 @@ class MainActivity : AppCompatActivity() {
         binding.pauseButton.isVisible = button == TimerButton.PAUSE_BTN
         binding.startButton.isVisible = button == TimerButton.START_BTN
         binding.menu.isVisible = button == TimerButton.START_BTN
-    }
-
-    private fun buzz(pattern: LongArray) {
-        val buzzer = getSystemService<Vibrator>()
-        buzzer?.let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                buzzer.vibrate(VibrationEffect.createWaveform(pattern, -1))
-            } else {
-                buzzer.vibrate(pattern, -1)
-            }
-        }
     }
 
     override fun onDestroy() {
