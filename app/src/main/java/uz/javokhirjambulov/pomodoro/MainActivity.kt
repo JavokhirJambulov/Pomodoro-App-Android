@@ -28,6 +28,7 @@ import uz.javokhirjambulov.pomodoro.service.ForegroundTimerService
 import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.airbnb.lottie.LottieCompositionFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -93,6 +94,15 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        LottieCompositionFactory.fromRawRes(this, R.raw.confetti).addListener {
+            binding.fireworksAnim.setComposition(it)
+            binding.fireworksAnim.visibility = View.INVISIBLE
+        }
+        LottieCompositionFactory.fromRawRes(this, R.raw.cat).addListener {
+            binding.catAnim.setComposition(it)
+            binding.catAnim.visibility = View.INVISIBLE
         }
 
         setProgressTime(POMODORO_DEFAULT_TIME)
@@ -263,6 +273,9 @@ class MainActivity : AppCompatActivity() {
             }
             TimerType.SESSION_COMPLETED -> {
                 binding.timerType.text = getString(R.string.timer_type_completed)
+                binding.fireworksAnim.visibility = View.VISIBLE
+                binding.fireworksAnim.playAnimation()
+                binding.catAnim.visibility = View.INVISIBLE
             }
         }
 
@@ -272,16 +285,23 @@ class MainActivity : AppCompatActivity() {
                 visibleButton(TimerButton.PAUSE_BTN)
                 val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                binding.catAnim.visibility = View.VISIBLE
+                binding.catAnim.playAnimation()
+                binding.fireworksAnim.visibility = View.INVISIBLE
             }
             TimerStatus.STOPPED -> {
                 visibleButton(TimerButton.START_BTN)
                 val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                binding.catAnim.visibility = View.INVISIBLE
+                binding.catAnim.cancelAnimation()
             }
             TimerStatus.PAUSED -> {
                 visibleButton(TimerButton.CONTINUE_BTN)
                 val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                binding.catAnim.visibility = View.INVISIBLE
+                binding.catAnim.cancelAnimation()
             }
         }
     }
