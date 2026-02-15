@@ -1,4 +1,4 @@
-package uz.javokhirjambulov.pomodoro.commons
+package com.nemjava.pomodoro.commons
 
 
 object Constants {
@@ -14,7 +14,7 @@ object Constants {
 
     // Source code
     const val sourceCodeURL: String = "https://github.com/JavokhirJambulov/Pomodoro-App-Android"
-    const val feedbackURL = "mailto:javohirjambulov@gmail.com?subject=Feedback about %s"
+    const val feedbackURL = "mailto:jambulovnemat01@gmail.com?subject=Feedback about %s"
 
     //Used to vibrate
     val POMODORO_OVER_BUZZ_PATTERN = longArrayOf(200, 100, 200, 100, 200, 100)

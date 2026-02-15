@@ -1,4 +1,4 @@
-package uz.javokhirjambulov.pomodoro.commons
+package com.nemjava.pomodoro.commons
 
 enum class BuzzType(val pattern: LongArray) {
     POMODORO_OVER(Constants.POMODORO_OVER_BUZZ_PATTERN),

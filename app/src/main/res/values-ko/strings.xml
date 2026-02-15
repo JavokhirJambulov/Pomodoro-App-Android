@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">포모도로</string>
     <string name="play">놀다</string>
-    <string name="channel_name" translatable="false">uz.javokhirjambulov.pomodoro.screen</string>
+    <string name="channel_name" translatable="false">com.nemjava.pomodoro.screen</string>
     <string name="channel_description">PomodroApp</string>
     <string name="start">시작</string>
     <string name="pause">정지시키다</string>

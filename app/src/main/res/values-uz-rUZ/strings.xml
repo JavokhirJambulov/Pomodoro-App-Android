@@ -3,7 +3,7 @@
 
     <string name="app_name">Pomodoro</string>
     <string name="play">O\'ynamoq</string>
-    <string name="channel_name" translatable="false">uz.javokhirjambulov.pomodoro.screen</string>
+    <string name="channel_name" translatable="false">com.nemjava.pomodoro.screen</string>
     <string name="channel_description">PomodroApp</string>
     <string name="start">Boshlash</string>
     <string name="pause">Pauza</string>

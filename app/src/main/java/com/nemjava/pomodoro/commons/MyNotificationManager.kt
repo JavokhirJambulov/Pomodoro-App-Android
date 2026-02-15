@@ -1,4 +1,4 @@
-package uz.javokhirjambulov.pomodoro.commons
+package com.nemjava.pomodoro.commons
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,9 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import uz.javokhirjambulov.pomodoro.ActionReceiver
-import uz.javokhirjambulov.pomodoro.MainActivity
-import uz.javokhirjambulov.pomodoro.R
+import com.nemjava.pomodoro.ActionReceiver
+import com.nemjava.pomodoro.MainActivity
+import com.nemjava.pomodoro.R
 
 class MyNotificationManager(private val context: Context) {
     private val channel_ID = "CHANNEL_ID"

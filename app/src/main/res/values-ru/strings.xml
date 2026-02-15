@@ -3,7 +3,7 @@
 
     <string name="app_name">Помидор</string>
     <string name="play">Играть</string>
-    <string name="channel_name">uz.javokhirjambulov.pomodoro.screen</string>
+    <string name="channel_name">com.nemjava.pomodoro.screen</string>
     <string name="channel_description">PomodroApp</string>
     <string name="start">Начинать</string>
     <string name="pause">Пауза</string>

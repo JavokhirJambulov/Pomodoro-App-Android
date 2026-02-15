@@ -1,11 +1,11 @@
-package uz.javokhirjambulov.pomodoro
+package com.nemjava.pomodoro
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
-import uz.javokhirjambulov.pomodoro.commons.Constants
-import uz.javokhirjambulov.pomodoro.service.ForegroundTimerService
+import com.nemjava.pomodoro.commons.Constants
+import com.nemjava.pomodoro.service.ForegroundTimerService
 
 class ActionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {

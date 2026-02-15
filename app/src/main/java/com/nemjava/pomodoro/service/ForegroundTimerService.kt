@@ -1,4 +1,4 @@
-package uz.javokhirjambulov.pomodoro.service
+package com.nemjava.pomodoro.service
 
 import android.app.Service
 import android.content.Intent
@@ -10,8 +10,8 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.format.DateUtils
 import kotlinx.coroutines.*
-import uz.javokhirjambulov.pomodoro.R
-import uz.javokhirjambulov.pomodoro.commons.*
+import com.nemjava.pomodoro.R
+import com.nemjava.pomodoro.commons.*
 import kotlin.math.ln
 
 class ForegroundTimerService : Service() {

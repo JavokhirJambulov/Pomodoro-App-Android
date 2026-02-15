@@ -1,4 +1,4 @@
-package uz.javokhirjambulov.pomodoro
+package com.nemjava.pomodoro
 
 import android.content.*
 import android.content.pm.PackageManager
@@ -19,12 +19,12 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import uz.javokhirjambulov.pomodoro.commons.*
-import uz.javokhirjambulov.pomodoro.databinding.MainScreenFragmentBinding
-import uz.javokhirjambulov.pomodoro.screen.AboutActivity
-import uz.javokhirjambulov.pomodoro.screen.MainIntroActivity
-import uz.javokhirjambulov.pomodoro.screen.MainScreenViewModel
-import uz.javokhirjambulov.pomodoro.service.ForegroundTimerService
+import com.nemjava.pomodoro.commons.*
+import com.nemjava.pomodoro.databinding.MainScreenFragmentBinding
+import com.nemjava.pomodoro.screen.AboutActivity
+import com.nemjava.pomodoro.screen.MainIntroActivity
+import com.nemjava.pomodoro.screen.MainScreenViewModel
+import com.nemjava.pomodoro.service.ForegroundTimerService
 import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat

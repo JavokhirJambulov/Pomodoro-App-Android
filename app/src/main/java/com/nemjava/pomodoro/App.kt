@@ -1,4 +1,4 @@
-package uz.javokhirjambulov.pomodoro
+package com.nemjava.pomodoro
 
 import android.app.Application
 

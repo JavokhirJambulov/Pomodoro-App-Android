@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="uz.javokhirjambulov.pomodoro">
+    package="com.nemjava.pomodoro">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pomodoro">
         <activity
-            android:name="uz.javokhirjambulov.pomodoro.MainActivity"
+            android:name="com.nemjava.pomodoro.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:showOnLockScreen="true"

@@ -1,12 +1,12 @@
-package uz.javokhirjambulov.pomodoro.screen
+package com.nemjava.pomodoro.screen
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import uz.javokhirjambulov.pomodoro.R
-import uz.javokhirjambulov.pomodoro.commons.Constants
-import uz.javokhirjambulov.pomodoro.databinding.ActivityAboutBinding
+import com.nemjava.pomodoro.R
+import com.nemjava.pomodoro.commons.Constants
+import com.nemjava.pomodoro.databinding.ActivityAboutBinding
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat

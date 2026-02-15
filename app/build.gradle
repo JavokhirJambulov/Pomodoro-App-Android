@@ -1,13 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id("com.google.gms.google-services")
 }
 
 android {
     compileSdk 35
-    namespace 'uz.javokhirjambulov.pomodoro'
+    namespace 'com.nemjava.pomodoro'
     defaultConfig {
-        applicationId "uz.javokhirjambulov.pomodoro"
+        applicationId "com.nemjava.pomodoro"
         minSdk 24
         targetSdk 35
         versionCode 2
@@ -50,7 +51,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.9.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.9.1'
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
+
+    implementation(platform("com.google.firebase:firebase-bom:34.9.0"))
     implementation("com.google.firebase:firebase-analytics")
 
     testImplementation 'junit:junit:4.13.2'

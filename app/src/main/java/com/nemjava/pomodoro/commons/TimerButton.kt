@@ -1,4 +1,4 @@
-package uz.javokhirjambulov.pomodoro.commons
+package com.nemjava.pomodoro.commons
 
 enum class TimerButton {
     START_BTN,

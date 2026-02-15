@@ -1,8 +1,8 @@
-package uz.javokhirjambulov.pomodoro.screen
+package com.nemjava.pomodoro.screen
 
 import androidx.lifecycle.*
-import uz.javokhirjambulov.pomodoro.commons.BuzzType
-import uz.javokhirjambulov.pomodoro.commons.MediaType
+import com.nemjava.pomodoro.commons.BuzzType
+import com.nemjava.pomodoro.commons.MediaType
 
 class MainScreenViewModel : ViewModel() {
 

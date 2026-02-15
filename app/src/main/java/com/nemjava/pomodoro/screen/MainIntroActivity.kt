@@ -1,4 +1,4 @@
-package uz.javokhirjambulov.pomodoro.screen
+package com.nemjava.pomodoro.screen
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.heinrichreimersoftware.materialintro.app.IntroActivity
 import com.heinrichreimersoftware.materialintro.slide.SimpleSlide
-import uz.javokhirjambulov.pomodoro.R
+import com.nemjava.pomodoro.R
 
 class MainIntroActivity: IntroActivity() {
 
