@@ -15,4 +15,16 @@
     <color name="grey900">#212121</color>
     <color name="grey1000">#141414</color>
     <color name="grey1200">#0A0A0A</color>
+    <color name="screen_background">#FAFAFA</color>
+    <color name="screen_text_primary">#212121</color>
+    <color name="screen_text_secondary">#424242</color>
+    <color name="screen_accent">#3700B3</color>
+
+    <color name="dialog_surface">#F8F6FF</color>
+    <color name="dialog_on_surface">#1F1B2D</color>
+    <color name="dialog_on_surface_secondary">#7D7590</color>
+    <color name="dialog_button_neutral_bg">#EDE9F6</color>
+    <color name="dialog_button_neutral_on">#302B3D</color>
+    <color name="dialog_button_primary_bg">#6F4FBD</color>
+    <color name="dialog_button_primary_on">#FFFFFF</color>
 </resources>

@@ -19,13 +19,6 @@
     <string name="tutorial">ट्यूटोरियल</string>
     <string name="version_1_0_0">संस्करण 1.0.0</string>
 
-    <string name="intro_avoid_distractions">ध्यान भटकाने से बचें</string>
-    <string name="intro_avoid_distractions_description">ऐप द्वारा प्रबंधित समयबद्ध सत्रों का उपयोग करके अपने काम को ट्रैक पर रखें।</string>
-    <string name="intro_clear_mind">अपना दिमाग साफ़ करें</string>
-    <string name="intro_clear_mind_description">छोटे ब्रेक के साथ खुद को पुरस्कृत करें और तरोताजा हो जाएं।</string>
-    <string name="intro_get_started">शुरू हो जाओ</string>
-    <string name="intro_get_started_description">केंद्रित रहें, शिथिलता से छुटकारा पाएं और अपनी उत्पादकता में सुधार करें।</string>
-    <string name="app_intro">ऐप परिचय</string>
     <string name="timer_type_pomodoro">वर्तमान में पोमोदोरोस में</string>
     <string name="timer_type_break">वर्तमान में ब्रेक . में</string>
     <string name="timer_type_completed">बधाई सत्र पूरा हुआ</string>
@@ -45,6 +38,21 @@
     <string name="long_break_duration_min">लंबी ब्रेक अवधि (मिनट)</string>
     <string name="sessions">सत्र</string>
     <string name="ready_for_new_session">नए सत्र के लिए तैयार</string>
+    <string name="current_plan">वर्तमान योजना</string>
+    <string name="edit">संपादित करें</string>
+    <string name="edit_timer">टाइमर संपादित करें</string>
+    <string name="close">बंद करें</string>
+    <string name="focus">फोकस</string>
+    <string name="duration_in_minutes">मिनटों में अवधि</string>
+    <string name="break_label">ब्रेक</string>
+    <string name="short_rest_duration">छोटे विश्राम की अवधि</string>
+    <string name="long_break_label">लंबा ब्रेक</string>
+    <string name="after_full_cycle">पूरे चक्र के बाद</string>
+    <string name="sessions_per_cycle">प्रति चक्र सत्र</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="save">सहेजें</string>
+    <string name="plan_durations_format">%1$d / %2$d / %3$d मि</string>
+    <string name="plan_sessions_format">%1$d सत्र</string>
 
 
 </resources>

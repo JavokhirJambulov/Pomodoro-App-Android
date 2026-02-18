@@ -16,7 +16,7 @@
     </style>
     <!-- the theme applied to the application or activity -->
     <style name="CustomActionBarTheme"
-        parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
 
         <!-- Support library compatibility -->
@@ -25,7 +25,7 @@
 
     <!-- ActionBar styles -->
     <style name="MyActionBar"
-        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/actionbar_background</item>
 
         <!-- Support library compatibility -->

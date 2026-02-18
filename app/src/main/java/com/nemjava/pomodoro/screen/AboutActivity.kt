@@ -34,10 +34,5 @@ class AboutActivity : AppCompatActivity(){
 
             startActivity(emailIntent)
         }
-        binding.appIntro.setOnClickListener {
-            // show app intro
-            val i = Intent(this, MainIntroActivity::class.java)
-            startActivity(i)
-        }
     }
 }

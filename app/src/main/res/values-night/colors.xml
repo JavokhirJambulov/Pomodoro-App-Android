@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFF</color>
+    <color name="button_color">#2D2F3A</color>
+    <color name="grey500">#3A3D4A</color>
+    <color name="grey800">#C9CCD8</color>
+    <color name="grey900">#F2F3F7</color>
+    <color name="screen_background">#11131A</color>
+    <color name="screen_text_primary">#F2F3F7</color>
+    <color name="screen_text_secondary">#C9CCD8</color>
+    <color name="screen_accent">#B9A3FF</color>
+
+    <color name="dialog_surface">#232232</color>
+    <color name="dialog_on_surface">#FFFFFF</color>
+    <color name="dialog_on_surface_secondary">#B3FFFFFF</color>
+    <color name="dialog_button_neutral_bg">#2E2E3B</color>
+    <color name="dialog_button_neutral_on">#FFFFFF</color>
+    <color name="dialog_button_primary_bg">#6F4FBD</color>
+    <color name="dialog_button_primary_on">#FFFFFF</color>
+</resources>

@@ -18,13 +18,6 @@
     <string name="tutorial">지도 시간</string>
     <string name="version_1_0_0">버전 1.0.0</string>
 
-    <string name="intro_avoid_distractions">주의를 산만하게 하는 것을 피하십시오</string>
-    <string name="intro_avoid_distractions_description">앱에서 처리하는 시간 제한 세션을 사용하여 작업을 계속 진행하십시오.</string>
-    <string name="intro_clear_mind">마음을 비워</string>
-    <string name="intro_clear_mind_description">짧은 휴식으로 자신에게 보상하고 상쾌함을 받으세요.</string>
-    <string name="intro_get_started">시작하다</string>
-    <string name="intro_get_started_description">집중을 유지하고 미루는 것을 없애고 생산성을 향상시키십시오.</string>
-    <string name="app_intro">앱 소개</string>
     <string name="timer_type_pomodoro">현재 뽀모도로에서</string>
     <string name="timer_type_break">현재 휴식 중</string>
     <string name="timer_type_completed">축하 세션 완료</string>
@@ -44,4 +37,19 @@
     <string name="long_break_duration_min">긴 휴식 시간(분)</string>
     <string name="sessions">세션</string>
     <string name="ready_for_new_session">새 세션 준비</string>
+    <string name="current_plan">현재 계획</string>
+    <string name="edit">편집</string>
+    <string name="edit_timer">타이머 편집</string>
+    <string name="close">닫기</string>
+    <string name="focus">집중</string>
+    <string name="duration_in_minutes">분 단위 시간</string>
+    <string name="break_label">휴식</string>
+    <string name="short_rest_duration">짧은 휴식 시간</string>
+    <string name="long_break_label">긴 휴식</string>
+    <string name="after_full_cycle">전체 사이클 후</string>
+    <string name="sessions_per_cycle">사이클당 세션 수</string>
+    <string name="cancel">취소</string>
+    <string name="save">저장</string>
+    <string name="plan_durations_format">%1$d / %2$d / %3$d분</string>
+    <string name="plan_sessions_format">%1$d회 세션</string>
 </resources>

@@ -19,13 +19,6 @@
     <string name="tutorial">Руководство</string>
     <string name="version_1_0_0">Версия 1.0.0</string>
 
-    <string name="intro_avoid_distractions">Избегайте отвлекающих факторов</string>
-    <string name="intro_avoid_distractions_description">Следите за своей работой, используя синхронизированные сеансы, управляемые приложением.</string>
-    <string name="intro_clear_mind">Очисти свой разум</string>
-    <string name="intro_clear_mind_description">Вознаграждайте себя короткими перерывами и освежайтесь.</string>
-    <string name="intro_get_started">Начать</string>
-    <string name="intro_get_started_description">Сосредоточьтесь, избавьтесь от прокрастинации и повысьте свою продуктивность.</string>
-    <string name="app_intro">Введение в приложение</string>
     <string name="timer_type_pomodoro">Сейчас в Помидоре</string>
     <string name="timer_type_break">Сейчас в перерыве</string>
     <string name="timer_type_completed">Поздравляем Сессия завершена</string>
@@ -45,6 +38,21 @@
     <string name="long_break_duration_min">Продолжительность длительного перерыва (мин)</string>
     <string name="sessions">Сессии</string>
     <string name="ready_for_new_session">Готов к новой сессии</string>
+    <string name="current_plan">Текущий план</string>
+    <string name="edit">Изменить</string>
+    <string name="edit_timer">Изменение таймера</string>
+    <string name="close">Закрыть</string>
+    <string name="focus">Фокус</string>
+    <string name="duration_in_minutes">Длительность в минутах</string>
+    <string name="break_label">Перерыв</string>
+    <string name="short_rest_duration">Длительность короткого перерыва</string>
+    <string name="long_break_label">Длинный перерыв</string>
+    <string name="after_full_cycle">После полного цикла</string>
+    <string name="sessions_per_cycle">Сеансов за цикл</string>
+    <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
+    <string name="plan_durations_format">%1$d / %2$d / %3$d мин</string>
+    <string name="plan_sessions_format">%1$d сеансов</string>
 
 
 </resources>

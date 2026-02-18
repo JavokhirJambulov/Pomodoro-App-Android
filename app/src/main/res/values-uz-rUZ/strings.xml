@@ -19,13 +19,6 @@
     <string name="tutorial">Oʻquv qoʻllanma</string>
     <string name="version_1_0_0">1.0.0 versiyasi</string>
 
-    <string name="intro_avoid_distractions">Chalg\'itadigan narsalardan saqlaning</string>
-    <string name="intro_avoid_distractions_description">Ilova tomonidan boshqariladigan vaqtli seanslar yordamida ishingizni davom ettiring.</string>
-    <string name="intro_clear_mind">Fikringizni tozalang</string>
-    <string name="intro_clear_mind_description">Qisqa tanaffuslar bilan o\'zingizni mukofotlang va yangilang.</string>
-    <string name="intro_get_started">Boshlash</string>
-    <string name="intro_get_started_description">Diqqatingizni jamlang, kechiktirishdan xalos bo\'ling va samaradorlikni oshiring.</string>
-    <string name="app_intro">Ilovaga kirish</string>
     <string name="timer_type_pomodoro">Hozirda Pomodoroda</string>
     <string name="timer_type_break">Hozirda Tanaffusda</string>
     <string name="timer_type_completed">Tabriklaymiz Seans tugadi!</string>
@@ -45,6 +38,21 @@
     <string name="sessions">Seanslar</string>
     <string name="pomodoro_is_paused_notification">Pomodoro pauza qilindi</string>
     <string name="ready_for_new_session">Yangi sessiyaga tayyor</string>
+    <string name="current_plan">Joriy reja</string>
+    <string name="edit">Tahrirlash</string>
+    <string name="edit_timer">Taymerni tahrirlash</string>
+    <string name="close">Yopish</string>
+    <string name="focus">Diqqat</string>
+    <string name="duration_in_minutes">Davomiyligi (daqiqada)</string>
+    <string name="break_label">Tanaffus</string>
+    <string name="short_rest_duration">Qisqa tanaffus davomiyligi</string>
+    <string name="long_break_label">Uzoq tanaffus</string>
+    <string name="after_full_cycle">To\'liq sikldan keyin</string>
+    <string name="sessions_per_cycle">Har bir sikldagi seanslar</string>
+    <string name="cancel">Bekor qilish</string>
+    <string name="save">Saqlash</string>
+    <string name="plan_durations_format">%1$d / %2$d / %3$d daq</string>
+    <string name="plan_sessions_format">%1$d seans</string>
 
 
 </resources>

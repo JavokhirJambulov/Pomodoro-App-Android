@@ -17,13 +17,6 @@
     <string name="tutorial">Tutorial</string>
     <string name="version_1_0_0">Version 1.0.0</string>
 
-    <string name="intro_avoid_distractions">"Avoid distractions"</string>
-    <string name="intro_avoid_distractions_description">"Keep your work on track using timed sessions handled by the app."</string>
-    <string name="intro_clear_mind">"Clear your mind"</string>
-    <string name="intro_clear_mind_description">"Reward yourself with short breaks and get refreshed."</string>
-    <string name="intro_get_started">"Get started"</string>
-    <string name="intro_get_started_description">"Stay focused, get rid of procrastination and improve your productivity."</string>
-    <string name="app_intro">App intro</string>
     <string name="timer_type_pomodoro">Currently in Pomodoro</string>
     <string name="timer_type_break">Currently in Break</string>
     <string name="timer_type_completed">Congratulations Session completed</string>
@@ -43,4 +36,19 @@
     <string name="long_break_duration_min">Long Break duration(min)</string>
     <string name="sessions">Sessions</string>
     <string name="ready_for_new_session">Ready for New Session</string>
+    <string name="current_plan">Current Plan</string>
+    <string name="edit">Edit</string>
+    <string name="edit_timer">Edit Timer</string>
+    <string name="close">Close</string>
+    <string name="focus">Focus</string>
+    <string name="duration_in_minutes">Duration in minutes</string>
+    <string name="break_label">Break</string>
+    <string name="short_rest_duration">Short rest duration</string>
+    <string name="long_break_label">Long Break</string>
+    <string name="after_full_cycle">After full cycle</string>
+    <string name="sessions_per_cycle">Sessions per cycle</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="plan_durations_format">%1$d / %2$d / %3$d m</string>
+    <string name="plan_sessions_format">%1$d sessions</string>
 </resources>

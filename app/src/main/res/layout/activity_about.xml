@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/screen_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
             android:layout_margin="8dp"
             android:layout_marginTop="16dp"
             android:text="@string/app_name"
-            android:textColor="@color/black"
+            android:textColor="@color/screen_text_primary"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/version_1_0_0"
-            android:textColor="@color/black"
+            android:textColor="@color/screen_text_secondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/about_application_name" />
@@ -54,7 +55,7 @@
             android:focusable="true"
             android:padding="16dp"
             android:text="@string/view_source_code_at_github"
-            android:textColor="@color/black"
+            android:textColor="@color/screen_text_primary"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,28 +70,12 @@
             android:focusable="true"
             android:padding="16dp"
             android:text="@string/send_feedback"
-            android:textColor="@color/black"
+            android:textColor="@color/screen_text_primary"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_source_code" />
-
-        <TextView
-            android:id="@+id/app_intro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="16dp"
-            android:text="@string/app_intro"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/send_feedback" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

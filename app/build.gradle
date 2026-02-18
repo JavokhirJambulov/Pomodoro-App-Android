@@ -63,7 +63,4 @@ dependencies {
     // Navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
     implementation "android.arch.navigation:navigation-ui-ktx:1.0.0"
-    // Intro
-    implementation 'com.heinrichreimersoftware:material-intro:2.0.0'
-
 }

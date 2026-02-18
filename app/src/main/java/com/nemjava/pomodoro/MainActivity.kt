@@ -22,7 +22,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.nemjava.pomodoro.commons.*
 import com.nemjava.pomodoro.databinding.MainScreenFragmentBinding
 import com.nemjava.pomodoro.screen.AboutActivity
-import com.nemjava.pomodoro.screen.MainIntroActivity
 import com.nemjava.pomodoro.screen.MainScreenViewModel
 import com.nemjava.pomodoro.service.ForegroundTimerService
 import androidx.core.content.edit
@@ -80,11 +79,6 @@ class MainActivity : AppCompatActivity() {
             this.packageName + "_private_preferences",
             MODE_PRIVATE
         )
-        if (isFirstRun()) {
-            val i = Intent(this, MainIntroActivity::class.java)
-            startActivity(i)
-            consumeFirstRun()
-        }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         binding = DataBindingUtil.setContentView(this, R.layout.main_screen_fragment)
@@ -333,8 +327,4 @@ class MainActivity : AppCompatActivity() {
             serviceBound = false
         }
     }
-
-    private fun isFirstRun() = preferencesPrivate.getBoolean(Constants.FIRST_RUN, true)
-
-    private fun consumeFirstRun() = preferencesPrivate.edit { putBoolean(Constants.FIRST_RUN, false) }
 }

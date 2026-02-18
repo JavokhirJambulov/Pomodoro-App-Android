@@ -22,6 +22,4 @@ object Constants {
     val LONG_BREAK_OVER_BUZZ_PATTERN = longArrayOf(0, 500, 0, 500)
     val NO_BUZZ_PATTERN = longArrayOf(0)
 
-    //used to Open the Intro Activity first
-    const val FIRST_RUN = "pref_first_run"
 }
