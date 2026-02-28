@@ -2,6 +2,8 @@ package com.nemjava.pomodoro
 
 import android.content.*
 import android.content.pm.PackageManager
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -94,6 +96,14 @@ class MainActivity : AppCompatActivity() {
         LottieCompositionFactory.fromRawRes(this, R.raw.confetti).addListener {
             binding.fireworksAnim.setComposition(it)
             binding.fireworksAnim.visibility = View.INVISIBLE
+            binding.fireworksAnim.addAnimatorListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    binding.fireworksAnim.visibility = View.GONE
+                }
+                override fun onAnimationCancel(animation: Animator) {
+                    binding.fireworksAnim.visibility = View.GONE
+                }
+            })
         }
         LottieCompositionFactory.fromRawRes(this, R.raw.cat).addListener {
             binding.catAnim.setComposition(it)
@@ -296,6 +306,7 @@ class MainActivity : AppCompatActivity() {
             TimerType.SESSION_COMPLETED -> {
                 binding.timerType.text = getString(R.string.timer_type_completed)
                 binding.fireworksAnim.visibility = View.VISIBLE
+                binding.fireworksAnim.progress = 0f
                 binding.fireworksAnim.playAnimation()
                 binding.catAnim.visibility = View.INVISIBLE
             }
