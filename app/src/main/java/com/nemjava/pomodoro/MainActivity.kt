@@ -9,36 +9,41 @@ import android.text.format.DateUtils
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.nemjava.pomodoro.commons.*
+import com.airbnb.lottie.LottieCompositionFactory
+import com.nemjava.pomodoro.commons.TimerButton
+import com.nemjava.pomodoro.commons.TimerStatus
+import com.nemjava.pomodoro.commons.TimerType
 import com.nemjava.pomodoro.databinding.MainScreenFragmentBinding
 import com.nemjava.pomodoro.screen.AboutActivity
 import com.nemjava.pomodoro.screen.MainScreenViewModel
 import com.nemjava.pomodoro.service.ForegroundTimerService
-import androidx.core.content.edit
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.airbnb.lottie.LottieCompositionFactory
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 
 class MainActivity : AppCompatActivity() {
 
-    private var POMODORO_DEFAULT_TIME = 1200L
     private val viewModel by viewModels<MainScreenViewModel>()
     private lateinit var binding: MainScreenFragmentBinding
-    private lateinit var preferencesPrivate: SharedPreferences
+    private var currentTimerStatus = TimerStatus.STOPPED
+    private var currentSessionIndex = 1L
 
     // Service binding
     private var timerService: ForegroundTimerService? = null
     private var serviceBound = false
+
+    companion object {
+        private const val DEFAULT_POMODORO_MINUTES = 20L
+        private const val DEFAULT_BREAK_MINUTES = 3L
+        private const val DEFAULT_LONG_BREAK_MINUTES = 5L
+        private const val DEFAULT_SESSIONS = 2L
+    }
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -47,15 +52,17 @@ class MainActivity : AppCompatActivity() {
             serviceBound = true
 
             // Set up callbacks
-            timerService?.setTimerUpdateCallback { timeInSeconds, timerType, timerStatus ->
+            timerService?.setTimerUpdateCallback { timeInSeconds, timerType, timerStatus, sessionIndex, totalSessions ->
                 runOnUiThread {
-                    updateUI(timeInSeconds, timerType, timerStatus)
+                    updateUI(timeInSeconds, timerType, timerStatus, sessionIndex, totalSessions)
                 }
             }
 
             // Sync current state
             timerService?.getCurrentState()?.let { (time, type, status) ->
-                updateUI(time, type, status)
+                val (sessionIndex, totalSessions) = timerService?.getSessionProgress()
+                    ?: Pair(1L, getSessions())
+                updateUI(time, type, status, sessionIndex, totalSessions)
             }
         }
 
@@ -75,14 +82,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        preferencesPrivate = this.getSharedPreferences(
-            this.packageName + "_private_preferences",
-            MODE_PRIVATE
-        )
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         binding = DataBindingUtil.setContentView(this, R.layout.main_screen_fragment)
-        binding.bottomSheet.mainScreenViewModel = viewModel
         binding.lifecycleOwner = this
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -99,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             binding.catAnim.visibility = View.INVISIBLE
         }
 
-        setProgressTime(POMODORO_DEFAULT_TIME)
+        setProgressTime(getPomodoroMinutes() * 60)
         setupUI()
         bindTimerService()
     }
@@ -110,69 +111,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
-
-        binding.bottomSheet.pomodoroSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                val pomodoroTime = (progress * 300L) + 600L
-                viewModel.setPomodoroTime(pomodoroTime / 60)
-                setProgressTime(pomodoroTime)
-            }
-            override fun onStartTrackingTouch(seek: SeekBar) {}
-            override fun onStopTrackingTouch(seek: SeekBar) {}
-        })
-
-        binding.bottomSheet.breakSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                val breakTime = progress * 180L + 180L
-                viewModel.setBreakTime(breakTime / 60)
-                setProgressTime(breakTime)
-            }
-            override fun onStartTrackingTouch(seek: SeekBar) {}
-            override fun onStopTrackingTouch(seek: SeekBar) {}
-        })
-
-        binding.bottomSheet.longBreakSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                val longBreakTime = progress * 300L + 300L
-                viewModel.setLongBreakTime(longBreakTime / 60)
-                setProgressTime(longBreakTime)
-            }
-            override fun onStartTrackingTouch(seek: SeekBar) {}
-            override fun onStopTrackingTouch(seek: SeekBar) {}
-        })
-
-        binding.bottomSheet.sessionsSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
-                viewModel.setSessions(progress + 2L)
-            }
-            override fun onStartTrackingTouch(seek: SeekBar) {}
-            override fun onStopTrackingTouch(seek: SeekBar) {}
-        })
-
-        setupBottomSheet(bottomSheetBehavior)
         setupButtons()
-    }
-
-    private fun setupBottomSheet(bottomSheetBehavior: BottomSheetBehavior<View>) {
-        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            binding.coordinatorLayout.bringToFront()
-            bottomSheetBehavior.isHideable = true
-            bottomSheetBehavior.peekHeight = 150
-            bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onStateChanged(bottomSheet: View, newState: Int) {}
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    if (slideOffset > 0.1) {
-                        binding.startButton.alpha = ((0.9 - slideOffset).toFloat())
-                        binding.startButton.isEnabled = false
-                    } else {
-                        binding.startButton.alpha = 1F
-                        binding.startButton.isEnabled = true
-                    }
-                }
-            })
-        }
+        observePlanSettings()
+        updatePlanSummary()
+        updateSessionStatusChip(1L, getSessions())
     }
 
     private fun setupButtons() {
@@ -203,16 +145,92 @@ class MainActivity : AppCompatActivity() {
         binding.quitButton.setOnClickListener {
             stopTimer()
         }
+        binding.editPlanButton.setOnClickListener {
+            showEditTimerDialog()
+        }
+    }
+
+    private fun observePlanSettings() {
+        viewModel.pomodoroTimeString.observe(this) {
+            updatePlanSummary()
+            if (currentTimerStatus == TimerStatus.STOPPED) {
+                setProgressTime(getPomodoroMinutes() * 60)
+            }
+        }
+        viewModel.breakTimeString.observe(this) { updatePlanSummary() }
+        viewModel.longBreakTimeString.observe(this) { updatePlanSummary() }
+        viewModel.sessionsString.observe(this) {
+            updatePlanSummary()
+            if (currentTimerStatus == TimerStatus.STOPPED) {
+                updateSessionStatusChip(1L, getSessions())
+            } else {
+                updateSessionStatusChip(currentSessionIndex, getSessions())
+            }
+        }
+    }
+
+    private fun updatePlanSummary() {
+        binding.currentPlanDurations.text = getString(
+            R.string.plan_durations_format,
+            getPomodoroMinutes().toInt(),
+            getBreakMinutes().toInt(),
+            getLongBreakMinutes().toInt()
+        )
+        binding.currentPlanSessions.text = getString(
+            R.string.plan_sessions_format,
+            getSessions().toInt()
+        )
+    }
+
+    private fun showEditTimerDialog() {
+        if (currentTimerStatus != TimerStatus.STOPPED) return
+
+        EditTimerDialog.show(
+            activity = this,
+            initialSettings = TimerPlanSettings(
+                pomodoroMinutes = getPomodoroMinutes(),
+                breakMinutes = getBreakMinutes(),
+                longBreakMinutes = getLongBreakMinutes(),
+                sessions = getSessions()
+            )
+        ) { updatedSettings ->
+            viewModel.setPomodoroTime(updatedSettings.pomodoroMinutes)
+            viewModel.setBreakTime(updatedSettings.breakMinutes)
+            viewModel.setLongBreakTime(updatedSettings.longBreakMinutes)
+            viewModel.setSessions(updatedSettings.sessions)
+            applyTimerSettingsToService()
+            setProgressTime(updatedSettings.pomodoroMinutes * 60)
+        }
+    }
+
+    private fun applyTimerSettingsToService() {
+        timerService?.setTimerSettings(
+            getPomodoroMinutes(),
+            getBreakMinutes(),
+            getLongBreakMinutes(),
+            getSessions()
+        )
+    }
+
+    private fun getPomodoroMinutes(): Long {
+        return viewModel.pomodoroTimeString.value?.toLongOrNull() ?: DEFAULT_POMODORO_MINUTES
+    }
+
+    private fun getBreakMinutes(): Long {
+        return viewModel.breakTimeString.value?.toLongOrNull() ?: DEFAULT_BREAK_MINUTES
+    }
+
+    private fun getLongBreakMinutes(): Long {
+        return viewModel.longBreakTimeString.value?.toLongOrNull() ?: DEFAULT_LONG_BREAK_MINUTES
+    }
+
+    private fun getSessions(): Long {
+        return viewModel.sessionsString.value?.toLongOrNull() ?: DEFAULT_SESSIONS
     }
 
     private fun startTimer() {
         // Update service with current settings
-        val pomodoroMinutes = viewModel.pomodoroTimeString.value?.toLongOrNull() ?: 20L
-        val breakMinutes = viewModel.breakTimeString.value?.toLongOrNull() ?: 3L
-        val longBreakMinutes = viewModel.longBreakTimeString.value?.toLongOrNull() ?: 5L
-        val sessions = viewModel.sessionsString.value?.toLongOrNull() ?: 2L
-
-        timerService?.setTimerSettings(pomodoroMinutes, breakMinutes, longBreakMinutes, sessions)
+        applyTimerSettingsToService()
 
         // Start service if not running
         val serviceIntent = Intent(this, ForegroundTimerService::class.java).apply {
@@ -235,7 +253,17 @@ class MainActivity : AppCompatActivity() {
         stopService(intent)
     }
 
-    private fun updateUI(timeInSeconds: Long, timerType: TimerType, timerStatus: TimerStatus) {
+    private fun updateUI(
+        timeInSeconds: Long,
+        timerType: TimerType,
+        timerStatus: TimerStatus,
+        sessionIndex: Long,
+        totalSessions: Long
+    ) {
+        currentTimerStatus = timerStatus
+        currentSessionIndex = sessionIndex
+        updateSessionStatusChip(sessionIndex, totalSessions)
+
         // Update progress indicator
         val timeLeftString = DateUtils.formatElapsedTime(timeInSeconds)
         val timeTextAdapter = CircularProgressIndicator.ProgressTextAdapter { timeLeftString }
@@ -243,10 +271,10 @@ class MainActivity : AppCompatActivity() {
 
         // Calculate start time based on timer type
         val startTime = when (timerType) {
-            TimerType.POMODORO -> (viewModel.pomodoroTimeString.value?.toLongOrNull() ?: 20L) * 60
-            TimerType.BREAK -> (viewModel.breakTimeString.value?.toLongOrNull() ?: 3L) * 60
-            TimerType.LONG_BREAK -> (viewModel.longBreakTimeString.value?.toLongOrNull() ?: 5L) * 60
-            else -> 1200L
+            TimerType.POMODORO -> getPomodoroMinutes() * 60
+            TimerType.BREAK -> getBreakMinutes() * 60
+            TimerType.LONG_BREAK -> getLongBreakMinutes() * 60
+            else -> getPomodoroMinutes() * 60
         }
 
         binding.circularProgress.setProgress(timeInSeconds.toDouble(), startTime.toDouble())
@@ -277,23 +305,17 @@ class MainActivity : AppCompatActivity() {
         when (timerStatus) {
             TimerStatus.IN_PROGRESS -> {
                 visibleButton(TimerButton.PAUSE_BTN)
-                val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                 binding.catAnim.visibility = View.VISIBLE
                 binding.catAnim.playAnimation()
                 binding.fireworksAnim.visibility = View.INVISIBLE
             }
             TimerStatus.STOPPED -> {
                 visibleButton(TimerButton.START_BTN)
-                val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 binding.catAnim.visibility = View.INVISIBLE
                 binding.catAnim.cancelAnimation()
             }
             TimerStatus.PAUSED -> {
                 visibleButton(TimerButton.CONTINUE_BTN)
-                val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.root)
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                 binding.catAnim.visibility = View.INVISIBLE
                 binding.catAnim.cancelAnimation()
             }
@@ -309,15 +331,28 @@ class MainActivity : AppCompatActivity() {
         val timeLeftString = DateUtils.formatElapsedTime(time)
         val timeTextAdapter = CircularProgressIndicator.ProgressTextAdapter { timeLeftString }
         binding.circularProgress.setProgressTextAdapter(timeTextAdapter)
-        binding.circularProgress.setProgress(time.toDouble(), POMODORO_DEFAULT_TIME.toDouble())
+        binding.circularProgress.setProgress(time.toDouble(), time.toDouble())
+    }
+
+    private fun updateSessionStatusChip(sessionIndex: Long, totalSessions: Long) {
+        val safeTotal = totalSessions.coerceAtLeast(1L)
+        val safeIndex = sessionIndex.coerceAtLeast(1L).coerceAtMost(safeTotal)
+        binding.sessionStatusText.text = getString(
+            R.string.session_status_format,
+            getString(R.string.session),
+            safeIndex.toInt(),
+            safeTotal.toInt()
+        )
     }
 
     private fun visibleButton(button: TimerButton) {
+        val canEditPlan = button == TimerButton.START_BTN
         binding.continueButton.isVisible = button == TimerButton.CONTINUE_BTN
         binding.quitButton.isVisible = button == TimerButton.CONTINUE_BTN
         binding.pauseButton.isVisible = button == TimerButton.PAUSE_BTN
-        binding.startButton.isVisible = button == TimerButton.START_BTN
-        binding.menu.isVisible = button == TimerButton.START_BTN
+        binding.startButton.isVisible = canEditPlan
+        binding.menu.isVisible = canEditPlan
+        binding.currentPlanCard.isVisible = canEditPlan
     }
 
     override fun onDestroy() {

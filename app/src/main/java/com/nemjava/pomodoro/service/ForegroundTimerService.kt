@@ -35,7 +35,7 @@ class ForegroundTimerService : Service() {
     private var sessions = 2L
 
     // Callbacks
-    private var onTimerUpdate: ((Long, TimerType, TimerStatus) -> Unit)? = null
+    private var onTimerUpdate: ((Long, TimerType, TimerStatus, Long, Long) -> Unit)? = null
 
     inner class TimerBinder : Binder() {
         fun getService(): ForegroundTimerService = this@ForegroundTimerService
@@ -67,7 +67,7 @@ class ForegroundTimerService : Service() {
         sessions = sessionCount
     }
 
-    fun setTimerUpdateCallback(callback: (Long, TimerType, TimerStatus) -> Unit) {
+    fun setTimerUpdateCallback(callback: (Long, TimerType, TimerStatus, Long, Long) -> Unit) {
         onTimerUpdate = callback
     }
 
@@ -96,21 +96,21 @@ class ForegroundTimerService : Service() {
         timerStatus = TimerStatus.IN_PROGRESS
         startTimerJob()
         updateNotification()
-        onTimerUpdate?.invoke(timeInSeconds, currentTimer, timerStatus)
+        notifyTimerUpdate()
     }
 
     fun pauseTimer() {
         timerStatus = TimerStatus.PAUSED
         cancelTimerJob()
         updateNotification()
-        onTimerUpdate?.invoke(timeInSeconds, currentTimer, timerStatus)
+        notifyTimerUpdate()
     }
 
     fun resumeTimer() {
         timerStatus = TimerStatus.IN_PROGRESS
         startTimerJob()
         updateNotification()
-        onTimerUpdate?.invoke(timeInSeconds, currentTimer, timerStatus)
+        notifyTimerUpdate()
     }
 
     fun stopTimer() {
@@ -121,7 +121,7 @@ class ForegroundTimerService : Service() {
         sessionCounter = 0L
         stopForeground(STOP_FOREGROUND_REMOVE)
         notificationManager.clearNotification()
-        onTimerUpdate?.invoke(timeInSeconds, currentTimer, timerStatus)
+        notifyTimerUpdate()
         stopSelf()
     }
 
@@ -133,7 +133,7 @@ class ForegroundTimerService : Service() {
                 // Update UI on main thread
                 withContext(Dispatchers.Main) {
                     updateNotification()
-                    onTimerUpdate?.invoke(timeInSeconds, currentTimer, timerStatus)
+                    notifyTimerUpdate()
                 }
             }
 
@@ -175,7 +175,7 @@ class ForegroundTimerService : Service() {
                 timeInSeconds = 0L
                 stopForeground(STOP_FOREGROUND_REMOVE)
                 notificationManager.clearNotification()
-                onTimerUpdate?.invoke(timeInSeconds, currentTimer, timerStatus)
+                notifyTimerUpdate()
                 stopSelf()
             }
             else -> {
@@ -184,7 +184,7 @@ class ForegroundTimerService : Service() {
         }
 
         updateNotification()
-        onTimerUpdate?.invoke(timeInSeconds, currentTimer, timerStatus)
+        notifyTimerUpdate()
     }
 
     private fun cancelTimerJob() {
@@ -204,6 +204,28 @@ class ForegroundTimerService : Service() {
     }
 
     fun getCurrentState() = Triple(timeInSeconds, currentTimer, timerStatus)
+
+    fun getSessionProgress() = Pair(getDisplaySessionIndex(currentTimer), sessions)
+
+    private fun notifyTimerUpdate() {
+        onTimerUpdate?.invoke(
+            timeInSeconds,
+            currentTimer,
+            timerStatus,
+            getDisplaySessionIndex(currentTimer),
+            sessions
+        )
+    }
+
+    private fun getDisplaySessionIndex(timerType: TimerType): Long {
+        val totalSessions = sessions.coerceAtLeast(1L)
+        return when (timerType) {
+            TimerType.SESSION_NOT_STARTED_YET -> 1L
+            TimerType.POMODORO -> (sessionCounter + 1L).coerceAtMost(totalSessions)
+            TimerType.BREAK -> sessionCounter.coerceAtLeast(1L).coerceAtMost(totalSessions)
+            TimerType.LONG_BREAK, TimerType.SESSION_COMPLETED -> totalSessions
+        }
+    }
 
     private fun handleTimerComplete(timerType: TimerType) {
         when (timerType) {

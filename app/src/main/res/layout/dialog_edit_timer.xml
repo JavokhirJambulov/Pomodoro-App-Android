@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/dialog_surface"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="2dp"
+    android:orientation="vertical"
+    android:padding="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_timer"
+                android:textColor="@color/dialog_on_surface"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/focus"
+                    android:textColor="@color/dialog_on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duration_in_minutes"
+                    android:textColor="@color/dialog_on_surface_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/focusMinusButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_button_shape"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:includeFontPadding="false"
+                    app:backgroundTint="@color/dialog_button_neutral_bg"
+                    android:text="-"
+                    android:textColor="@color/dialog_button_neutral_on"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/focusValue"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/dialog_on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/focusPlusButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_button_shape"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    app:backgroundTint="@color/dialog_button_neutral_bg"
+                    android:text="+"
+                    android:textColor="@color/dialog_button_neutral_on"
+                    android:textSize="22sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/break_label"
+                    android:textColor="@color/dialog_on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/short_rest_duration"
+                    android:textColor="@color/dialog_on_surface_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/breakMinusButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_button_shape"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    app:backgroundTint="@color/dialog_button_neutral_bg"
+                    android:text="-"
+                    android:textColor="@color/dialog_button_neutral_on"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/breakValue"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/dialog_on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/breakPlusButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_button_shape"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    app:backgroundTint="@color/dialog_button_neutral_bg"
+                    android:text="+"
+                    android:textColor="@color/dialog_button_neutral_on"
+                    android:textSize="22sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/long_break_label"
+                    android:textColor="@color/dialog_on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/after_full_cycle"
+                    android:textColor="@color/dialog_on_surface_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/longBreakMinusButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_button_shape"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    app:backgroundTint="@color/dialog_button_neutral_bg"
+                    android:text="-"
+                    android:textColor="@color/dialog_button_neutral_on"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/longBreakValue"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/dialog_on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/longBreakPlusButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_button_shape"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    app:backgroundTint="@color/dialog_button_neutral_bg"
+                    android:text="+"
+                    android:textColor="@color/dialog_button_neutral_on"
+                    android:textSize="22sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sessions"
+                    android:textColor="@color/dialog_on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sessions_per_cycle"
+                    android:textColor="@color/dialog_on_surface_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/sessionsMinusButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_button_shape"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    app:backgroundTint="@color/dialog_button_neutral_bg"
+                    android:text="-"
+                    android:textColor="@color/dialog_button_neutral_on"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/sessionsValue"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/dialog_on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/sessionsPlusButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_button_shape"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    app:backgroundTint="@color/dialog_button_neutral_bg"
+                    android:text="+"
+                    android:textColor="@color/dialog_button_neutral_on"
+                    android:textSize="22sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_shape"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                app:backgroundTint="@color/dialog_button_neutral_bg"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/dialog_button_neutral_on"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_shape"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                app:backgroundTint="@color/dialog_button_primary_bg"
+                android:text="@string/save"
+                android:textAllCaps="false"
+                android:textColor="@color/dialog_button_primary_on"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

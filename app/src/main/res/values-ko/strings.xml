@@ -31,10 +31,10 @@
     <string name="continue_notification">계속하다?</string>
     <string name="session_completed">세션 완료</string>
     <string name="pomodoro">포모도로</string>
-    <string name="menu">메뉴</string>
     <string name="pomodoro_duration_min">뽀모도로 지속시간(분)</string>
     <string name="break_duration_min">휴식시간(분)</string>
     <string name="long_break_duration_min">긴 휴식 시간(분)</string>
+    <string name="session">세션</string>
     <string name="sessions">세션</string>
     <string name="ready_for_new_session">새 세션 준비</string>
     <string name="current_plan">현재 계획</string>

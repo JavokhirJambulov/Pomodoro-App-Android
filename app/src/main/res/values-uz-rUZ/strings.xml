@@ -31,10 +31,10 @@
     <string name="continue_notification">Davom ettirilsinmi?</string>
     <string name="session_completed">Seans tugallandi</string>
     <string name="pomodoro">Pomodoro</string>
-    <string name="menu">Menyu</string>
     <string name="pomodoro_duration_min">Pomodoro davomiyligi (daq)</string>
     <string name="break_duration_min">Tanaffus davomiyligi (daq)</string>
     <string name="long_break_duration_min">Uzoq tanaffus davomiyligi (daq)</string>
+    <string name="session">Seans</string>
     <string name="sessions">Seanslar</string>
     <string name="pomodoro_is_paused_notification">Pomodoro pauza qilindi</string>
     <string name="ready_for_new_session">Yangi sessiyaga tayyor</string>

@@ -32,10 +32,10 @@
     <string name="continue_notification">Продолжать?</string>
     <string name="session_completed">Сессия завершена</string>
     <string name="pomodoro">Помидор</string>
-    <string name="menu">Меню</string>
     <string name="pomodoro_duration_min">Продолжительность помидора (мин)</string>
     <string name="break_duration_min">Продолжительность перерыва (мин)</string>
     <string name="long_break_duration_min">Продолжительность длительного перерыва (мин)</string>
+    <string name="session">Сессия</string>
     <string name="sessions">Сессии</string>
     <string name="ready_for_new_session">Готов к новой сессии</string>
     <string name="current_plan">Текущий план</string>

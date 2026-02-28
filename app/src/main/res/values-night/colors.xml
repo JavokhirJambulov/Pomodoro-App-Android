@@ -17,4 +17,7 @@
     <color name="dialog_button_neutral_on">#FFFFFF</color>
     <color name="dialog_button_primary_bg">#6F4FBD</color>
     <color name="dialog_button_primary_on">#FFFFFF</color>
+
+    <color name="current_plan_card_bg">#1D1A2B</color>
+    <color name="current_plan_card_stroke">#2E2840</color>
 </resources>

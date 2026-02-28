@@ -32,10 +32,10 @@
     <string name="continue_notification">जारी रखना?</string>
     <string name="session_completed">सत्र पूर्ण</string>
     <string name="pomodoro">पोमोडोरो</string>
-    <string name="menu">मेन्यू</string>
     <string name="pomodoro_duration_min">पोमोडोरो अवधि (मिनट)</string>
     <string name="break_duration_min">ब्रेक अवधि (मिनट)</string>
     <string name="long_break_duration_min">लंबी ब्रेक अवधि (मिनट)</string>
+    <string name="session">सत्र</string>
     <string name="sessions">सत्र</string>
     <string name="ready_for_new_session">नए सत्र के लिए तैयार</string>
     <string name="current_plan">वर्तमान योजना</string>
