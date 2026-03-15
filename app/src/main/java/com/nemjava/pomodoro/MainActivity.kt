@@ -27,6 +27,7 @@ import com.nemjava.pomodoro.screen.AboutActivity
 import com.nemjava.pomodoro.screen.MainScreenViewModel
 import com.nemjava.pomodoro.service.ForegroundTimerService
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+import androidx.core.view.isInvisible
 
 class MainActivity : AppCompatActivity() {
 
@@ -262,6 +263,7 @@ class MainActivity : AppCompatActivity() {
         sessionIndex: Long,
         totalSessions: Long
     ) {
+        val previousTimerStatus = currentTimerStatus
         currentTimerStatus = timerStatus
         currentSessionIndex = sessionIndex
         updateSessionStatusChip(sessionIndex, totalSessions)
@@ -307,9 +309,13 @@ class MainActivity : AppCompatActivity() {
         when (timerStatus) {
             TimerStatus.IN_PROGRESS -> {
                 updateActionState(timerStatus)
-                binding.catAnim.visibility = View.VISIBLE
-                binding.catAnim.playAnimation()
-                binding.fireworksAnim.visibility = View.INVISIBLE
+                if (binding.catAnim.isInvisible) {
+                    binding.catAnim.visibility = View.VISIBLE
+                }
+                if (previousTimerStatus != TimerStatus.IN_PROGRESS) {
+                    binding.catAnim.playAnimation()
+                    binding.fireworksAnim.visibility = View.INVISIBLE
+                }
             }
 
             TimerStatus.STOPPED -> {
