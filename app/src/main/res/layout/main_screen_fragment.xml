@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,13 +13,14 @@
             android:id="@+id/fireworksAnim"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:lottie_autoPlay="false"
-            app:lottie_loop="false"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -57,7 +59,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text=""
             android:textColor="@color/screen_text_secondary"
             android:textSize="18sp"
             android:textStyle="italic"
@@ -104,7 +105,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/circular_progress">
 
-        <LinearLayout
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -133,53 +134,18 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <FrameLayout
-            android:id="@+id/button_container"
+        <Button
+            android:id="@+id/action_button"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
             android:layout_marginTop="32dp"
-            app:layout_constraintWidth_percent="0.60"
+            android:background="@drawable/bg_button_shape"
+            android:text="@string/start"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/session_status_chip"
-            app:layout_constraintStart_toStartOf="parent">
-            <Button
-                android:id="@+id/start_button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:text="@string/start"
-                android:background="@drawable/bg_button_shape"/>
-
-            <Button
-                android:id="@+id/pause_button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_button_shape"
-                android:layout_gravity="center"
-                android:text="@string/pause"
-                android:backgroundTint="@color/button_color"
-                android:visibility="invisible"/>
-            <Button
-                android:id="@+id/continue_button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:text="@string/continue_button"
-                android:visibility="invisible"
-                android:background="@drawable/bg_button_shape"/>
-        </FrameLayout>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/catAnim"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:padding="20sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/current_plan_card"
-            app:layout_constraintTop_toBottomOf="@+id/quit_button"
-            app:lottie_autoPlay="false"
-            app:lottie_loop="true"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintWidth_percent="0.60"/>
 
         <TextView
             android:id="@+id/quit_button"
@@ -192,7 +158,18 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_container"/>
+            app:layout_constraintTop_toBottomOf="@+id/action_button" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/catAnim"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="20sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/current_plan_card"
+            app:layout_constraintTop_toBottomOf="@+id/quit_button"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/current_plan_card"

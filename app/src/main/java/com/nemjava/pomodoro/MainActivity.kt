@@ -20,7 +20,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.airbnb.lottie.LottieCompositionFactory
-import com.nemjava.pomodoro.commons.TimerButton
 import com.nemjava.pomodoro.commons.TimerStatus
 import com.nemjava.pomodoro.commons.TimerType
 import com.nemjava.pomodoro.databinding.MainScreenFragmentBinding
@@ -35,8 +34,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: MainScreenFragmentBinding
     private var currentTimerStatus = TimerStatus.STOPPED
     private var currentSessionIndex = 1L
-
-    // Service binding
     private var timerService: ForegroundTimerService? = null
     private var serviceBound = false
 
@@ -93,6 +90,23 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        loadAnimations()
+        setProgressTime(getPomodoroMinutes() * 60)
+        bindTimerService()
+        setupButtons()
+        observePlanSettings()
+        updatePlanSummary()
+        updateSessionStatusChip(1L, getSessions())
+    }
+
+
+
+    private fun bindTimerService() {
+        val intent = Intent(this, ForegroundTimerService::class.java)
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+    }
+
+    private fun loadAnimations() {
         LottieCompositionFactory.fromRawRes(this, R.raw.confetti).addListener {
             binding.fireworksAnim.setComposition(it)
             binding.fireworksAnim.visibility = View.INVISIBLE
@@ -109,22 +123,6 @@ class MainActivity : AppCompatActivity() {
             binding.catAnim.setComposition(it)
             binding.catAnim.visibility = View.INVISIBLE
         }
-
-        setProgressTime(getPomodoroMinutes() * 60)
-        setupUI()
-        bindTimerService()
-    }
-
-    private fun bindTimerService() {
-        val intent = Intent(this, ForegroundTimerService::class.java)
-        bindService(intent, serviceConnection, BIND_AUTO_CREATE)
-    }
-
-    private fun setupUI() {
-        setupButtons()
-        observePlanSettings()
-        updatePlanSummary()
-        updateSessionStatusChip(1L, getSessions())
     }
 
     private fun setupButtons() {
@@ -143,21 +141,15 @@ class MainActivity : AppCompatActivity() {
             popup.show()
         }
 
-        binding.startButton.setOnClickListener {
-            startTimer()
+        binding.actionButton.setOnClickListener {
+            when (currentTimerStatus) {
+                TimerStatus.IN_PROGRESS -> pauseTimer()
+                TimerStatus.PAUSED -> resumeTimer()
+                TimerStatus.STOPPED -> startTimer()
+            }
         }
-        binding.pauseButton.setOnClickListener {
-            pauseTimer()
-        }
-        binding.continueButton.setOnClickListener {
-            resumeTimer()
-        }
-        binding.quitButton.setOnClickListener {
-            stopTimer()
-        }
-        binding.editPlanButton.setOnClickListener {
-            showEditTimerDialog()
-        }
+        binding.quitButton.setOnClickListener { stopTimer() }
+        binding.editPlanButton.setOnClickListener { showEditTimerDialog() }
     }
 
     private fun observePlanSettings() {
@@ -239,12 +231,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
-        // Update service with current settings
-        applyTimerSettingsToService()
-
-        // Start service if not running
         val serviceIntent = Intent(this, ForegroundTimerService::class.java).apply {
-            putExtra("action", "START")
+            putExtra(ForegroundTimerService.EXTRA_ACTION, ForegroundTimerService.ACTION_START)
+            putExtra(ForegroundTimerService.EXTRA_POMODORO_MINUTES, getPomodoroMinutes())
+            putExtra(ForegroundTimerService.EXTRA_BREAK_MINUTES, getBreakMinutes())
+            putExtra(ForegroundTimerService.EXTRA_LONG_BREAK_MINUTES, getLongBreakMinutes())
+            putExtra(ForegroundTimerService.EXTRA_SESSIONS, getSessions())
         }
         ContextCompat.startForegroundService(this, serviceIntent)
     }
@@ -274,35 +266,35 @@ class MainActivity : AppCompatActivity() {
         currentSessionIndex = sessionIndex
         updateSessionStatusChip(sessionIndex, totalSessions)
 
-        // Update progress indicator
         val timeLeftString = DateUtils.formatElapsedTime(timeInSeconds)
         val timeTextAdapter = CircularProgressIndicator.ProgressTextAdapter { timeLeftString }
         binding.circularProgress.setProgressTextAdapter(timeTextAdapter)
 
-        // Calculate start time based on timer type
         val startTime = when (timerType) {
             TimerType.POMODORO -> getPomodoroMinutes() * 60
             TimerType.BREAK -> getBreakMinutes() * 60
             TimerType.LONG_BREAK -> getLongBreakMinutes() * 60
             else -> getPomodoroMinutes() * 60
         }
-
         binding.circularProgress.setProgress(timeInSeconds.toDouble(), startTime.toDouble())
 
-        // Update timer type text
         when (timerType) {
             TimerType.SESSION_NOT_STARTED_YET -> {
                 binding.timerType.text = getString(R.string.ready_for_new_session)
             }
+
             TimerType.POMODORO -> {
                 binding.timerType.text = getString(R.string.timer_type_pomodoro)
             }
+
             TimerType.BREAK -> {
                 binding.timerType.text = getString(R.string.timer_type_break)
             }
+
             TimerType.LONG_BREAK -> {
                 binding.timerType.text = getString(R.string.timer_type_long_break)
             }
+
             TimerType.SESSION_COMPLETED -> {
                 binding.timerType.text = getString(R.string.timer_type_completed)
                 binding.fireworksAnim.visibility = View.VISIBLE
@@ -312,21 +304,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Update buttons based on status
         when (timerStatus) {
             TimerStatus.IN_PROGRESS -> {
-                visibleButton(TimerButton.PAUSE_BTN)
+                updateActionState(timerStatus)
                 binding.catAnim.visibility = View.VISIBLE
                 binding.catAnim.playAnimation()
                 binding.fireworksAnim.visibility = View.INVISIBLE
             }
+
             TimerStatus.STOPPED -> {
-                visibleButton(TimerButton.START_BTN)
+                updateActionState(timerStatus)
                 binding.catAnim.visibility = View.INVISIBLE
                 binding.catAnim.cancelAnimation()
             }
+
             TimerStatus.PAUSED -> {
-                visibleButton(TimerButton.CONTINUE_BTN)
+                updateActionState(timerStatus)
                 binding.catAnim.visibility = View.INVISIBLE
                 binding.catAnim.cancelAnimation()
             }
@@ -356,18 +349,22 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun visibleButton(button: TimerButton) {
-        val canEditPlan = button == TimerButton.START_BTN
-        binding.continueButton.isVisible = button == TimerButton.CONTINUE_BTN
-        binding.quitButton.isVisible = button == TimerButton.CONTINUE_BTN
-        binding.pauseButton.isVisible = button == TimerButton.PAUSE_BTN
-        binding.startButton.isVisible = canEditPlan
+    private fun updateActionState(timerStatus: TimerStatus) {
+        val canEditPlan = timerStatus == TimerStatus.STOPPED
+        binding.actionButton.text = when (timerStatus) {
+            TimerStatus.IN_PROGRESS -> getString(R.string.pause)
+            TimerStatus.PAUSED -> getString(R.string.continue_button)
+            TimerStatus.STOPPED -> getString(R.string.start)
+        }
+        binding.quitButton.isVisible = timerStatus == TimerStatus.PAUSED
         binding.menu.isVisible = canEditPlan
         binding.currentPlanCard.isVisible = canEditPlan
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        binding.catAnim.cancelAnimation()
+        binding.fireworksAnim.cancelAnimation()
         if (serviceBound) {
             unbindService(serviceConnection)
             serviceBound = false

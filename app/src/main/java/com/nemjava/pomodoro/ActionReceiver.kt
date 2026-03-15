@@ -17,15 +17,15 @@ class ActionReceiver : BroadcastReceiver() {
 
         when (action) {
             Constants.BUTTON_STOP -> {
-                serviceIntent.putExtra("action", "STOP")
+                serviceIntent.putExtra(ForegroundTimerService.EXTRA_ACTION, ForegroundTimerService.ACTION_STOP)
                 ContextCompat.startForegroundService(context, serviceIntent)
             }
             Constants.BUTTON_START -> {
-                serviceIntent.putExtra("action", "RESUME")
+                serviceIntent.putExtra(ForegroundTimerService.EXTRA_ACTION, ForegroundTimerService.ACTION_RESUME)
                 ContextCompat.startForegroundService(context, serviceIntent)
             }
             Constants.BUTTON_PAUSE -> {
-                serviceIntent.putExtra("action", "PAUSE")
+                serviceIntent.putExtra(ForegroundTimerService.EXTRA_ACTION, ForegroundTimerService.ACTION_PAUSE)
                 ContextCompat.startForegroundService(context, serviceIntent)
             }
         }

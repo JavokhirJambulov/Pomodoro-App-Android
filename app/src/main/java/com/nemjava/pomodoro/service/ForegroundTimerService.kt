@@ -16,6 +16,18 @@ import kotlin.math.ln
 
 class ForegroundTimerService : Service() {
 
+    companion object {
+        const val EXTRA_ACTION = "action"
+        const val ACTION_START = "START"
+        const val ACTION_PAUSE = "PAUSE"
+        const val ACTION_RESUME = "RESUME"
+        const val ACTION_STOP = "STOP"
+        const val EXTRA_POMODORO_MINUTES = "pomodoro_minutes"
+        const val EXTRA_BREAK_MINUTES = "break_minutes"
+        const val EXTRA_LONG_BREAK_MINUTES = "long_break_minutes"
+        const val EXTRA_SESSIONS = "sessions"
+    }
+
     private lateinit var notificationManager: MyNotificationManager
     private val binder = TimerBinder()
     private var timerJob: Job? = null
@@ -49,15 +61,26 @@ class ForegroundTimerService : Service() {
     override fun onBind(intent: Intent?): IBinder = binder
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val action = intent?.getStringExtra("action")
+        applyTimerSettingsFromIntent(intent)
+        val action = intent?.getStringExtra(EXTRA_ACTION)
         when (action) {
-            "START" -> startTimer()
-            "PAUSE" -> pauseTimer()
-            "RESUME" -> resumeTimer()
-            "STOP" -> stopTimer()
+            ACTION_START -> startTimer()
+            ACTION_PAUSE -> pauseTimer()
+            ACTION_RESUME -> resumeTimer()
+            ACTION_STOP -> stopTimer()
         }
         updateNotification()
         return START_STICKY
+    }
+
+    private fun applyTimerSettingsFromIntent(intent: Intent?) {
+        if (intent == null || !intent.hasExtra(EXTRA_POMODORO_MINUTES)) return
+        setTimerSettings(
+            intent.getLongExtra(EXTRA_POMODORO_MINUTES, pomodoroTime),
+            intent.getLongExtra(EXTRA_BREAK_MINUTES, breakTime),
+            intent.getLongExtra(EXTRA_LONG_BREAK_MINUTES, longBreakTime),
+            intent.getLongExtra(EXTRA_SESSIONS, sessions)
+        )
     }
 
     fun setTimerSettings(pomodoro: Long, shortBreak: Long, longBreak: Long, sessionCount: Long) {
