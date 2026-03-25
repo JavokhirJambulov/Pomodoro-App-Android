@@ -30,6 +30,12 @@
             android:theme="@style/CustomActionBarTheme"
             android:screenOrientation="sensorPortrait">
         </activity>
+        <activity android:name=".screen.AnimationSelectionActivity"
+            android:parentActivityName=".screen.AboutActivity"
+            android:label="@string/select_timer_animation"
+            android:theme="@style/CustomActionBarTheme"
+            android:screenOrientation="sensorPortrait">
+        </activity>
         <service
             android:name=".service.ForegroundTimerService"
             android:enabled="true"

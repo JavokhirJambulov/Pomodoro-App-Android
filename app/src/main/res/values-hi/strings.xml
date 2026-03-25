@@ -53,6 +53,22 @@
     <string name="save">सहेजें</string>
     <string name="plan_durations_format">%1$d / %2$d / %3$d मि</string>
     <string name="plan_sessions_format">%1$d सत्र</string>
-
-
+    <string name="select_timer_animation">टाइमर एनीमेशन चुनें</string>
+    <string name="selected">चयनित</string>
+    <string name="animation_cat">बिल्ली</string>
+    <string name="animation_running_cat">दौड़ती बिल्ली</string>
+    <string name="animation_rainbow_cat">इंद्रधनुषी बिल्ली</string>
+    <string name="animation_loving_cat">प्यारी बिल्ली</string>
+    <string name="animation_cat_sleeping">सोती हुई बिल्ली</string>
+    <string name="animation_cat_crying">रोती हुई बिल्ली</string>
+    <string name="animation_bear_dancing">नाचता भालू</string>
+    <string name="animation_bird_flying">उड़ता पक्षी</string>
+    <string name="animation_boy_exercising">व्यायाम करता लड़का</string>
+    <string name="animation_boy_meditating">ध्यान करता लड़का</string>
+    <string name="animation_girl_meditating">ध्यान करती लड़की</string>
+    <string name="animation_woman_designer">महिला डिज़ाइनर</string>
+    <string name="animation_gibli_anime_girl">एनीमे लड़की</string>
+    <string name="animation_earth_rotating">घूमती पृथ्वी</string>
+    <string name="animation_planet_orbit">परिक्रमा करता ग्रह</string>
+    <string name="animation_space_rocket">अंतरिक्ष रॉकेट</string>
 </resources>

@@ -52,4 +52,22 @@
     <string name="save">저장</string>
     <string name="plan_durations_format">%1$d / %2$d / %3$d분</string>
     <string name="plan_sessions_format">%1$d회 세션</string>
+    <string name="select_timer_animation">타이머 애니메이션 선택</string>
+    <string name="selected">선택됨</string>
+    <string name="animation_cat">고양이</string>
+    <string name="animation_running_cat">달리는 고양이</string>
+    <string name="animation_rainbow_cat">무지개 고양이</string>
+    <string name="animation_loving_cat">사랑스러운 고양이</string>
+    <string name="animation_cat_sleeping">잠자는 고양이</string>
+    <string name="animation_cat_crying">우는 고양이</string>
+    <string name="animation_bear_dancing">춤추는 곰</string>
+    <string name="animation_bird_flying">나는 새</string>
+    <string name="animation_boy_exercising">운동하는 소년</string>
+    <string name="animation_boy_meditating">명상하는 소년</string>
+    <string name="animation_girl_meditating">명상하는 소녀</string>
+    <string name="animation_woman_designer">여성 디자이너</string>
+    <string name="animation_gibli_anime_girl">애니메 소녀</string>
+    <string name="animation_earth_rotating">회전하는 지구</string>
+    <string name="animation_planet_orbit">궤도 도는 행성</string>
+    <string name="animation_space_rocket">우주 로켓</string>
 </resources>

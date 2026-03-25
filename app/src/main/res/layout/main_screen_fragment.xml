@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/fireworksAnim"
+            android:id="@+id/confettiAnimation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible"
@@ -161,7 +161,7 @@
             app:layout_constraintTop_toBottomOf="@+id/action_button" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/catAnim"
+            android:id="@+id/timerAnimation"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="20sp"

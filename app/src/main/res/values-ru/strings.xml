@@ -53,6 +53,22 @@
     <string name="save">Сохранить</string>
     <string name="plan_durations_format">%1$d / %2$d / %3$d мин</string>
     <string name="plan_sessions_format">%1$d сеансов</string>
-
-
+    <string name="select_timer_animation">Выбрать анимацию таймера</string>
+    <string name="selected">Выбрано</string>
+    <string name="animation_cat">Кот</string>
+    <string name="animation_running_cat">Бегущий кот</string>
+    <string name="animation_rainbow_cat">Радужный кот</string>
+    <string name="animation_loving_cat">Ласковый кот</string>
+    <string name="animation_cat_sleeping">Спящий кот</string>
+    <string name="animation_cat_crying">Плачущий кот</string>
+    <string name="animation_bear_dancing">Танцующий медведь</string>
+    <string name="animation_bird_flying">Летящая птица</string>
+    <string name="animation_boy_exercising">Тренирующийся мальчик</string>
+    <string name="animation_boy_meditating">Медитирующий мальчик</string>
+    <string name="animation_girl_meditating">Медитирующая девочка</string>
+    <string name="animation_woman_designer">Женщина-дизайнер</string>
+    <string name="animation_gibli_anime_girl">Аниме-девушка</string>
+    <string name="animation_earth_rotating">Вращающаяся Земля</string>
+    <string name="animation_planet_orbit">Планета на орбите</string>
+    <string name="animation_space_rocket">Космическая ракета</string>
 </resources>

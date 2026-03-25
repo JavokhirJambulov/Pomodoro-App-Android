@@ -53,6 +53,22 @@
     <string name="save">Saqlash</string>
     <string name="plan_durations_format">%1$d / %2$d / %3$d daq</string>
     <string name="plan_sessions_format">%1$d seans</string>
-
-
+    <string name="select_timer_animation">Taymer animatsiyasini tanlang</string>
+    <string name="selected">Tanlangan</string>
+    <string name="animation_cat">Mushuk</string>
+    <string name="animation_running_cat">Yugurayotgan mushuk</string>
+    <string name="animation_rainbow_cat">Kamalak mushuk</string>
+    <string name="animation_loving_cat">Mehribon mushuk</string>
+    <string name="animation_cat_sleeping">Uxlayotgan mushuk</string>
+    <string name="animation_cat_crying">Yigʻlayotgan mushuk</string>
+    <string name="animation_bear_dancing">Raqsga tushayotgan ayiq</string>
+    <string name="animation_bird_flying">Uchayotgan qush</string>
+    <string name="animation_boy_exercising">Mashq qilayotgan bola</string>
+    <string name="animation_boy_meditating">Meditatsiya qilayotgan bola</string>
+    <string name="animation_girl_meditating">Meditatsiya qilayotgan qiz</string>
+    <string name="animation_woman_designer">Dizayner ayol</string>
+    <string name="animation_gibli_anime_girl">Anime qiz</string>
+    <string name="animation_earth_rotating">Aylanayotgan Yer</string>
+    <string name="animation_planet_orbit">Orbitadagi sayyora</string>
+    <string name="animation_space_rocket">Koinot raketasi</string>
 </resources>

@@ -11,6 +11,7 @@
     <string name="stop">Stop</string>
     <string name="quit">Quit</string>
     <string name="about">About</string>
+    <string name="select_timer_animation">Select timer animation</string>
     <string name="view_source_code_at_github">View source code on GitHub</string>
     <string name="send_feedback">Send feedback</string>
     <string name="troubleshooting">Troubleshooting</string>
@@ -52,4 +53,21 @@
     <string name="plan_durations_format">%1$d / %2$d / %3$d m</string>
     <string name="plan_sessions_format">%1$d sessions</string>
     <string name="session_status_format" translatable="false">%1$s • %2$d/%3$d</string>
+    <string name="selected">Selected</string>
+    <string name="animation_cat">Cat</string>
+    <string name="animation_running_cat">Running Cat</string>
+    <string name="animation_rainbow_cat">Rainbow Cat</string>
+    <string name="animation_loving_cat">Loving Cat</string>
+    <string name="animation_cat_sleeping">Sleeping Cat</string>
+    <string name="animation_cat_crying">Crying Cat</string>
+    <string name="animation_bear_dancing">Dancing Bear</string>
+    <string name="animation_bird_flying">Flying Bird</string>
+    <string name="animation_boy_exercising">Exercising Boy</string>
+    <string name="animation_boy_meditating">Meditating Boy</string>
+    <string name="animation_girl_meditating">Meditating Girl</string>
+    <string name="animation_woman_designer">Woman Designer</string>
+    <string name="animation_gibli_anime_girl">Anime Girl</string>
+    <string name="animation_earth_rotating">Rotating Earth</string>
+    <string name="animation_planet_orbit">Orbiting Planet</string>
+    <string name="animation_space_rocket">Space Rocket</string>
 </resources>

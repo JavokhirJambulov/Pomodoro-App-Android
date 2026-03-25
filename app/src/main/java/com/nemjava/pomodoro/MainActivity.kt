@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.airbnb.lottie.LottieCompositionFactory
+import com.nemjava.pomodoro.commons.TimerAnimationCatalog
 import com.nemjava.pomodoro.commons.TimerStatus
 import com.nemjava.pomodoro.commons.TimerType
 import com.nemjava.pomodoro.databinding.MainScreenFragmentBinding
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private var currentSessionIndex = 1L
     private var timerService: ForegroundTimerService? = null
     private var serviceBound = false
+    private var loadedTimerAnimationKey: String? = null
 
     companion object {
         private const val DEFAULT_POMODORO_MINUTES = 20L
@@ -108,21 +110,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadAnimations() {
+        loadConfettiAnimation()
+        loadSelectedTimerAnimation(true)
+    }
+
+    private fun loadConfettiAnimation() {
         LottieCompositionFactory.fromRawRes(this, R.raw.confetti).addListener {
-            binding.fireworksAnim.setComposition(it)
-            binding.fireworksAnim.visibility = View.INVISIBLE
-            binding.fireworksAnim.addAnimatorListener(object : AnimatorListenerAdapter() {
+            binding.confettiAnimation.setComposition(it)
+            binding.confettiAnimation.visibility = View.INVISIBLE
+            binding.confettiAnimation.addAnimatorListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    binding.fireworksAnim.visibility = View.GONE
+                    binding.confettiAnimation.visibility = View.GONE
                 }
                 override fun onAnimationCancel(animation: Animator) {
-                    binding.fireworksAnim.visibility = View.GONE
+                    binding.confettiAnimation.visibility = View.GONE
                 }
             })
         }
-        LottieCompositionFactory.fromRawRes(this, R.raw.cat).addListener {
-            binding.catAnim.setComposition(it)
-            binding.catAnim.visibility = View.INVISIBLE
+    }
+
+    private fun loadSelectedTimerAnimation(force: Boolean = false) {
+        val selectedAnimation = TimerAnimationCatalog.getSelectedOption(this)
+        if (!force && loadedTimerAnimationKey == selectedAnimation.key) return
+
+        loadedTimerAnimationKey = selectedAnimation.key
+        binding.timerAnimation.cancelAnimation()
+        LottieCompositionFactory.fromRawRes(this, selectedAnimation.rawResId).addListener { composition ->
+            if (loadedTimerAnimationKey != selectedAnimation.key) return@addListener
+            binding.timerAnimation.setComposition(composition)
+            if (currentTimerStatus == TimerStatus.IN_PROGRESS) {
+                binding.timerAnimation.visibility = View.VISIBLE
+                binding.timerAnimation.playAnimation()
+            } else {
+                binding.timerAnimation.visibility = View.INVISIBLE
+            }
         }
     }
 
@@ -299,37 +320,48 @@ class MainActivity : AppCompatActivity() {
 
             TimerType.SESSION_COMPLETED -> {
                 binding.timerType.text = getString(R.string.timer_type_completed)
-                binding.fireworksAnim.visibility = View.VISIBLE
-                binding.fireworksAnim.progress = 0f
-                binding.fireworksAnim.playAnimation()
-                binding.catAnim.visibility = View.INVISIBLE
+                binding.confettiAnimation.visibility = View.VISIBLE
+                binding.confettiAnimation.progress = 0f
+                binding.confettiAnimation.playAnimation()
+                hideRunningAnimation()
             }
         }
 
         when (timerStatus) {
             TimerStatus.IN_PROGRESS -> {
                 updateActionState(timerStatus)
-                if (binding.catAnim.isInvisible) {
-                    binding.catAnim.visibility = View.VISIBLE
-                }
+                binding.confettiAnimation.visibility = View.INVISIBLE
                 if (previousTimerStatus != TimerStatus.IN_PROGRESS) {
-                    binding.catAnim.playAnimation()
-                    binding.fireworksAnim.visibility = View.INVISIBLE
+                    loadSelectedTimerAnimation(true)
+                } else {
+                    showRunningAnimation()
                 }
             }
 
             TimerStatus.STOPPED -> {
                 updateActionState(timerStatus)
-                binding.catAnim.visibility = View.INVISIBLE
-                binding.catAnim.cancelAnimation()
+                hideRunningAnimation()
             }
 
             TimerStatus.PAUSED -> {
                 updateActionState(timerStatus)
-                binding.catAnim.visibility = View.INVISIBLE
-                binding.catAnim.cancelAnimation()
+                hideRunningAnimation()
             }
         }
+    }
+
+    private fun showRunningAnimation() {
+        if (binding.timerAnimation.isInvisible) {
+            binding.timerAnimation.visibility = View.VISIBLE
+        }
+        if (!binding.timerAnimation.isAnimating) {
+            binding.timerAnimation.playAnimation()
+        }
+    }
+
+    private fun hideRunningAnimation() {
+        binding.timerAnimation.visibility = View.INVISIBLE
+        binding.timerAnimation.cancelAnimation()
     }
 
     private fun startAboutActivity() {
@@ -369,11 +401,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.catAnim.cancelAnimation()
-        binding.fireworksAnim.cancelAnimation()
+        binding.timerAnimation.cancelAnimation()
+        binding.confettiAnimation.cancelAnimation()
         if (serviceBound) {
             unbindService(serviceConnection)
             serviceBound = false
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadSelectedTimerAnimation()
     }
 }

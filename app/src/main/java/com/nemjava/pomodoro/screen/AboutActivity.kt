@@ -34,5 +34,9 @@ class AboutActivity : AppCompatActivity(){
 
             startActivity(emailIntent)
         }
+
+        binding.selectTimerAnimation.setOnClickListener {
+            startActivity(Intent(this, AnimationSelectionActivity::class.java))
+        }
     }
 }

@@ -46,10 +46,25 @@
             app:layout_constraintTop_toBottomOf="@id/about_application_name" />
 
         <TextView
-            android:id="@+id/view_source_code"
+            android:id="@+id/select_timer_animation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:text="@string/select_timer_animation"
+            android:textColor="@color/screen_text_primary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/about_application_version" />
+
+        <TextView
+            android:id="@+id/view_source_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
@@ -59,7 +74,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/about_application_version" />
+            app:layout_constraintTop_toBottomOf="@+id/select_timer_animation" />
 
         <TextView
             android:id="@+id/send_feedback"
