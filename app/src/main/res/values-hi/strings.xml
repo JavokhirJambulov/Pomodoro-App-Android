@@ -12,12 +12,6 @@
     <string name="continue_button">जारी रखना</string>
     <string name="stop">विराम</string>
     <string name="quit">छोड़ना</string>
-    <string name="about">ऐप के बारे में</string>
-    <string name="view_source_code_at_github">GitHub पर स्रोत कोड देखें</string>
-    <string name="send_feedback">प्रतिक्रिया भेजें</string>
-    <string name="troubleshooting">समस्या निवारण</string>
-    <string name="tutorial">ट्यूटोरियल</string>
-    <string name="version_1_0_0">संस्करण 1.0.0</string>
 
     <string name="timer_type_pomodoro">वर्तमान में पोमोदोरोस में</string>
     <string name="timer_type_break">वर्तमान में ब्रेक . में</string>

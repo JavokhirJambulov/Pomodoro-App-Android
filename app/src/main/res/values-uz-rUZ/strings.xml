@@ -12,12 +12,6 @@
     <string name="continue_button">Davom etish</string>
     <string name="stop">To\'xtatish</string>
     <string name="quit">Tugatish</string>
-    <string name="about">Ilova haqida</string>
-    <string name="view_source_code_at_github">GitHub-da manba kodini ko\'ring</string>
-    <string name="send_feedback">Fikr-mulohaza yuboring</string>
-    <string name="troubleshooting">Muammolarni bartaraf qilish</string>
-    <string name="tutorial">Oʻquv qoʻllanma</string>
-    <string name="version_1_0_0">1.0.0 versiyasi</string>
 
     <string name="timer_type_pomodoro">Hozirda Pomodoroda</string>
     <string name="timer_type_break">Hozirda Tanaffusda</string>

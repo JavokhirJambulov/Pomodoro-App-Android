@@ -22,7 +22,7 @@ import com.nemjava.pomodoro.commons.TimerAnimationCatalog
 import com.nemjava.pomodoro.commons.TimerStatus
 import com.nemjava.pomodoro.commons.TimerType
 import com.nemjava.pomodoro.databinding.MainScreenFragmentBinding
-import com.nemjava.pomodoro.screen.AboutActivity
+import com.nemjava.pomodoro.screen.AnimationSelectionActivity
 import com.nemjava.pomodoro.screen.MainScreenViewModel
 import com.nemjava.pomodoro.service.ForegroundTimerService
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupButtons() {
         binding.menu.setOnClickListener {
-            startAboutActivity()
+            this.startActivity(Intent(this, AnimationSelectionActivity::class.java))
         }
 
         binding.actionButton.setOnClickListener {
@@ -349,11 +349,6 @@ class MainActivity : AppCompatActivity() {
     private fun hideRunningAnimation() {
         binding.timerAnimation.visibility = View.INVISIBLE
         binding.timerAnimation.cancelAnimation()
-    }
-
-    private fun startAboutActivity() {
-        val intent = Intent(this, AboutActivity::class.java)
-        this.startActivity(intent)
     }
 
     private fun setProgressTime(time: Long) {
