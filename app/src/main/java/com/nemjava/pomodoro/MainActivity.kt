@@ -8,12 +8,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.text.format.DateUtils
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -149,18 +147,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupButtons() {
         binding.menu.setOnClickListener {
-            val popup = PopupMenu(this, binding.menu)
-            popup.menuInflater.inflate(R.menu.menu, popup.menu)
-            popup.setOnMenuItemClickListener { item: MenuItem ->
-                when (item.itemId) {
-                    R.id.about -> {
-                        startAboutActivity()
-                        return@setOnMenuItemClickListener true
-                    }
-                }
-                false
-            }
-            popup.show()
+            startAboutActivity()
         }
 
         binding.actionButton.setOnClickListener {
