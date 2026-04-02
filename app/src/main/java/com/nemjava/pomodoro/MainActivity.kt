@@ -10,7 +10,6 @@ import android.os.IBinder
 import android.text.format.DateUtils
 import android.view.View
 import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -23,27 +22,18 @@ import com.nemjava.pomodoro.commons.TimerStatus
 import com.nemjava.pomodoro.commons.TimerType
 import com.nemjava.pomodoro.databinding.MainScreenFragmentBinding
 import com.nemjava.pomodoro.screen.AnimationSelectionActivity
-import com.nemjava.pomodoro.screen.MainScreenViewModel
 import com.nemjava.pomodoro.service.ForegroundTimerService
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import androidx.core.view.isInvisible
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<MainScreenViewModel>()
     private lateinit var binding: MainScreenFragmentBinding
     private var currentTimerStatus = TimerStatus.STOPPED
     private var currentSessionIndex = 1L
     private var timerService: ForegroundTimerService? = null
     private var serviceBound = false
     private var loadedTimerAnimationKey: String? = null
-
-    companion object {
-        private const val DEFAULT_POMODORO_MINUTES = 20L
-        private const val DEFAULT_BREAK_MINUTES = 3L
-        private const val DEFAULT_LONG_BREAK_MINUTES = 5L
-        private const val DEFAULT_SESSIONS = 2L
-    }
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -61,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             // Sync current state
             timerService?.getCurrentState()?.let { (time, type, status) ->
                 val (sessionIndex, totalSessions) = timerService?.getSessionProgress()
-                    ?: Pair(1L, getSessions())
+                    ?: Pair(1L, currentTimerPlanSettings().sessions)
                 updateUI(time, type, status, sessionIndex, totalSessions)
             }
         }
@@ -82,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
         binding = DataBindingUtil.setContentView(this, R.layout.main_screen_fragment)
         binding.lifecycleOwner = this
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
@@ -92,12 +81,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         loadAnimations()
-        setProgressTime(getPomodoroMinutes() * 60)
         bindTimerService()
         setupButtons()
-        observePlanSettings()
-        updatePlanSummary()
-        updateSessionStatusChip(1L, getSessions())
+        syncPlanUiWithCurrentState()
     }
 
 
@@ -161,35 +147,17 @@ class MainActivity : AppCompatActivity() {
         binding.editPlanButton.setOnClickListener { showEditTimerDialog() }
     }
 
-    private fun observePlanSettings() {
-        viewModel.pomodoroTimeString.observe(this) {
-            updatePlanSummary()
-            if (currentTimerStatus == TimerStatus.STOPPED) {
-                setProgressTime(getPomodoroMinutes() * 60)
-            }
-        }
-        viewModel.breakTimeString.observe(this) { updatePlanSummary() }
-        viewModel.longBreakTimeString.observe(this) { updatePlanSummary() }
-        viewModel.sessionsString.observe(this) {
-            updatePlanSummary()
-            if (currentTimerStatus == TimerStatus.STOPPED) {
-                updateSessionStatusChip(1L, getSessions())
-            } else {
-                updateSessionStatusChip(currentSessionIndex, getSessions())
-            }
-        }
-    }
-
     private fun updatePlanSummary() {
+        val timerPlanSettings = currentTimerPlanSettings()
         binding.currentPlanDurations.text = getString(
             R.string.plan_durations_format,
-            getPomodoroMinutes().toInt(),
-            getBreakMinutes().toInt(),
-            getLongBreakMinutes().toInt()
+            timerPlanSettings.pomodoroMinutes.toInt(),
+            timerPlanSettings.breakMinutes.toInt(),
+            timerPlanSettings.longBreakMinutes.toInt()
         )
         binding.currentPlanSessions.text = getString(
             R.string.plan_sessions_format,
-            getSessions().toInt()
+            timerPlanSettings.sessions.toInt()
         )
     }
 
@@ -198,54 +166,33 @@ class MainActivity : AppCompatActivity() {
 
         EditTimerDialog.show(
             activity = this,
-            initialSettings = TimerPlanSettings(
-                pomodoroMinutes = getPomodoroMinutes(),
-                breakMinutes = getBreakMinutes(),
-                longBreakMinutes = getLongBreakMinutes(),
-                sessions = getSessions()
-            )
+            initialSettings = currentTimerPlanSettings()
         ) { updatedSettings ->
-            viewModel.setPomodoroTime(updatedSettings.pomodoroMinutes)
-            viewModel.setBreakTime(updatedSettings.breakMinutes)
-            viewModel.setLongBreakTime(updatedSettings.longBreakMinutes)
-            viewModel.setSessions(updatedSettings.sessions)
-            applyTimerSettingsToService()
-            setProgressTime(updatedSettings.pomodoroMinutes * 60)
+            updateTimerPlanSettings(updatedSettings)
         }
     }
 
-    private fun applyTimerSettingsToService() {
-        timerService?.setTimerSettings(
-            getPomodoroMinutes(),
-            getBreakMinutes(),
-            getLongBreakMinutes(),
-            getSessions()
-        )
+    private fun currentTimerPlanSettings(): TimerPlanSettings = TimerPlanPreferences.load(this)
+
+    private fun updateTimerPlanSettings(updatedSettings: TimerPlanSettings) {
+        TimerPlanPreferences.save(this, updatedSettings)
+        syncPlanUiWithCurrentState()
     }
 
-    private fun getPomodoroMinutes(): Long {
-        return viewModel.pomodoroTimeString.value?.toLongOrNull() ?: DEFAULT_POMODORO_MINUTES
-    }
-
-    private fun getBreakMinutes(): Long {
-        return viewModel.breakTimeString.value?.toLongOrNull() ?: DEFAULT_BREAK_MINUTES
-    }
-
-    private fun getLongBreakMinutes(): Long {
-        return viewModel.longBreakTimeString.value?.toLongOrNull() ?: DEFAULT_LONG_BREAK_MINUTES
-    }
-
-    private fun getSessions(): Long {
-        return viewModel.sessionsString.value?.toLongOrNull() ?: DEFAULT_SESSIONS
+    private fun syncPlanUiWithCurrentState() {
+        val timerPlanSettings = currentTimerPlanSettings()
+        updatePlanSummary()
+        if (currentTimerStatus == TimerStatus.STOPPED) {
+            setProgressTime(timerPlanSettings.pomodoroMinutes * 60)
+            updateSessionStatusChip(1L, timerPlanSettings.sessions)
+        } else {
+            updateSessionStatusChip(currentSessionIndex, timerPlanSettings.sessions)
+        }
     }
 
     private fun startTimer() {
         val serviceIntent = Intent(this, ForegroundTimerService::class.java).apply {
             putExtra(ForegroundTimerService.EXTRA_ACTION, ForegroundTimerService.ACTION_START)
-            putExtra(ForegroundTimerService.EXTRA_POMODORO_MINUTES, getPomodoroMinutes())
-            putExtra(ForegroundTimerService.EXTRA_BREAK_MINUTES, getBreakMinutes())
-            putExtra(ForegroundTimerService.EXTRA_LONG_BREAK_MINUTES, getLongBreakMinutes())
-            putExtra(ForegroundTimerService.EXTRA_SESSIONS, getSessions())
         }
         ContextCompat.startForegroundService(this, serviceIntent)
     }
@@ -271,6 +218,7 @@ class MainActivity : AppCompatActivity() {
         sessionIndex: Long,
         totalSessions: Long
     ) {
+        val timerPlanSettings = currentTimerPlanSettings()
         val previousTimerStatus = currentTimerStatus
         currentTimerStatus = timerStatus
         currentSessionIndex = sessionIndex
@@ -281,10 +229,10 @@ class MainActivity : AppCompatActivity() {
         binding.circularProgress.setProgressTextAdapter(timeTextAdapter)
 
         val startTime = when (timerType) {
-            TimerType.POMODORO -> getPomodoroMinutes() * 60
-            TimerType.BREAK -> getBreakMinutes() * 60
-            TimerType.LONG_BREAK -> getLongBreakMinutes() * 60
-            else -> getPomodoroMinutes() * 60
+            TimerType.POMODORO -> timerPlanSettings.pomodoroMinutes * 60
+            TimerType.BREAK -> timerPlanSettings.breakMinutes * 60
+            TimerType.LONG_BREAK -> timerPlanSettings.longBreakMinutes * 60
+            else -> timerPlanSettings.pomodoroMinutes * 60
         }
         binding.circularProgress.setProgress(timeInSeconds.toDouble(), startTime.toDouble())
 

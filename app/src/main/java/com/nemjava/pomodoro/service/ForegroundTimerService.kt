@@ -11,6 +11,8 @@ import android.os.Vibrator
 import android.text.format.DateUtils
 import kotlinx.coroutines.*
 import com.nemjava.pomodoro.R
+import com.nemjava.pomodoro.TimerPlanPreferences
+import com.nemjava.pomodoro.TimerPlanSettings
 import com.nemjava.pomodoro.commons.*
 import kotlin.math.ln
 
@@ -22,10 +24,6 @@ class ForegroundTimerService : Service() {
         const val ACTION_PAUSE = "PAUSE"
         const val ACTION_RESUME = "RESUME"
         const val ACTION_STOP = "STOP"
-        const val EXTRA_POMODORO_MINUTES = "pomodoro_minutes"
-        const val EXTRA_BREAK_MINUTES = "break_minutes"
-        const val EXTRA_LONG_BREAK_MINUTES = "long_break_minutes"
-        const val EXTRA_SESSIONS = "sessions"
     }
 
     private lateinit var notificationManager: MyNotificationManager
@@ -39,12 +37,6 @@ class ForegroundTimerService : Service() {
     private var currentTimer = TimerType.SESSION_NOT_STARTED_YET
     private var timerStatus = TimerStatus.STOPPED
     private var sessionCounter = 0L
-
-    // Timer settings
-    private var pomodoroTime = 20L // minutes
-    private var breakTime = 3L // minutes
-    private var longBreakTime = 5L // minutes
-    private var sessions = 2L
 
     // Callbacks
     private var onTimerUpdate: ((Long, TimerType, TimerStatus, Long, Long) -> Unit)? = null
@@ -61,7 +53,6 @@ class ForegroundTimerService : Service() {
     override fun onBind(intent: Intent?): IBinder = binder
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        applyTimerSettingsFromIntent(intent)
         val action = intent?.getStringExtra(EXTRA_ACTION)
         when (action) {
             ACTION_START -> startTimer()
@@ -73,44 +64,29 @@ class ForegroundTimerService : Service() {
         return START_STICKY
     }
 
-    private fun applyTimerSettingsFromIntent(intent: Intent?) {
-        if (intent == null || !intent.hasExtra(EXTRA_POMODORO_MINUTES)) return
-        setTimerSettings(
-            intent.getLongExtra(EXTRA_POMODORO_MINUTES, pomodoroTime),
-            intent.getLongExtra(EXTRA_BREAK_MINUTES, breakTime),
-            intent.getLongExtra(EXTRA_LONG_BREAK_MINUTES, longBreakTime),
-            intent.getLongExtra(EXTRA_SESSIONS, sessions)
-        )
-    }
-
-    fun setTimerSettings(pomodoro: Long, shortBreak: Long, longBreak: Long, sessionCount: Long) {
-        pomodoroTime = pomodoro
-        breakTime = shortBreak
-        longBreakTime = longBreak
-        sessions = sessionCount
-    }
+    private fun currentTimerPlanSettings(): TimerPlanSettings = TimerPlanPreferences.load(this)
 
     fun setTimerUpdateCallback(callback: (Long, TimerType, TimerStatus, Long, Long) -> Unit) {
         onTimerUpdate = callback
     }
 
     fun startTimer() {
+        val timerPlanSettings = currentTimerPlanSettings()
         if (currentTimer == TimerType.SESSION_NOT_STARTED_YET || currentTimer == TimerType.SESSION_COMPLETED) {
             currentTimer = TimerType.POMODORO
             sessionCounter = 0L
         }
         when (currentTimer) {
-
             TimerType.POMODORO -> {
-                startTime = pomodoroTime * oneMinute
+                startTime = timerPlanSettings.pomodoroMinutes * oneMinute
                 timeInSeconds = startTime
             }
             TimerType.BREAK -> {
-                startTime = breakTime * oneMinute
+                startTime = timerPlanSettings.breakMinutes * oneMinute
                 timeInSeconds = startTime
             }
             TimerType.LONG_BREAK -> {
-                startTime = longBreakTime * oneMinute
+                startTime = timerPlanSettings.longBreakMinutes * oneMinute
                 timeInSeconds = startTime
             }
             else -> return
@@ -169,16 +145,17 @@ class ForegroundTimerService : Service() {
     }
 
     private fun checkTimer() {
+        val timerPlanSettings = currentTimerPlanSettings()
         when (currentTimer) {
             TimerType.POMODORO -> {
                 sessionCounter += 1
                 handleTimerComplete(TimerType.POMODORO)
-                if (sessionCounter >= sessions) {
+                if (sessionCounter >= timerPlanSettings.sessions) {
                     currentTimer = TimerType.LONG_BREAK
-                    startTime = longBreakTime * oneMinute
+                    startTime = timerPlanSettings.longBreakMinutes * oneMinute
                 } else {
                     currentTimer = TimerType.BREAK
-                    startTime = breakTime * oneMinute
+                    startTime = timerPlanSettings.breakMinutes * oneMinute
                 }
                 timeInSeconds = startTime
                 startTimerJob()
@@ -186,7 +163,7 @@ class ForegroundTimerService : Service() {
             TimerType.BREAK -> {
                 handleTimerComplete(TimerType.BREAK)
                 currentTimer = TimerType.POMODORO
-                startTime = pomodoroTime * oneMinute
+                startTime = timerPlanSettings.pomodoroMinutes * oneMinute
                 timeInSeconds = startTime
                 startTimerJob()
             }
@@ -228,20 +205,24 @@ class ForegroundTimerService : Service() {
 
     fun getCurrentState() = Triple(timeInSeconds, currentTimer, timerStatus)
 
-    fun getSessionProgress() = Pair(getDisplaySessionIndex(currentTimer), sessions)
+    fun getSessionProgress(): Pair<Long, Long> {
+        val timerPlanSettings = currentTimerPlanSettings()
+        return Pair(getDisplaySessionIndex(currentTimer, timerPlanSettings.sessions), timerPlanSettings.sessions)
+    }
 
     private fun notifyTimerUpdate() {
+        val timerPlanSettings = currentTimerPlanSettings()
         onTimerUpdate?.invoke(
             timeInSeconds,
             currentTimer,
             timerStatus,
-            getDisplaySessionIndex(currentTimer),
-            sessions
+            getDisplaySessionIndex(currentTimer, timerPlanSettings.sessions),
+            timerPlanSettings.sessions
         )
     }
 
-    private fun getDisplaySessionIndex(timerType: TimerType): Long {
-        val totalSessions = sessions.coerceAtLeast(1L)
+    private fun getDisplaySessionIndex(timerType: TimerType, totalSessionsValue: Long): Long {
+        val totalSessions = totalSessionsValue.coerceAtLeast(1L)
         return when (timerType) {
             TimerType.SESSION_NOT_STARTED_YET -> 1L
             TimerType.POMODORO -> (sessionCounter + 1L).coerceAtMost(totalSessions)
