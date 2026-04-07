@@ -49,6 +49,7 @@
     <string name="plan_sessions_format">%1$d सत्र</string>
     <string name="select_timer_animation">टाइमर एनीमेशन चुनें</string>
     <string name="selected">चयनित</string>
+    <string name="animation_off">कोई एनीमेशन नहीं</string>
     <string name="animation_cat">बिल्ली</string>
     <string name="animation_running_cat">दौड़ती बिल्ली</string>
     <string name="animation_rainbow_cat">इंद्रधनुषी बिल्ली</string>

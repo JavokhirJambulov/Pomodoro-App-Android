@@ -48,6 +48,7 @@
     <string name="plan_sessions_format">%1$d회 세션</string>
     <string name="select_timer_animation">타이머 애니메이션 선택</string>
     <string name="selected">선택됨</string>
+    <string name="animation_off">애니메이션 없음</string>
     <string name="animation_cat">고양이</string>
     <string name="animation_running_cat">달리는 고양이</string>
     <string name="animation_rainbow_cat">무지개 고양이</string>

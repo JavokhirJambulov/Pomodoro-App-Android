@@ -49,6 +49,7 @@
     <string name="plan_sessions_format">%1$d сеансов</string>
     <string name="select_timer_animation">Выбрать анимацию таймера</string>
     <string name="selected">Выбрано</string>
+    <string name="animation_off">Без анимации</string>
     <string name="animation_cat">Кот</string>
     <string name="animation_running_cat">Бегущий кот</string>
     <string name="animation_rainbow_cat">Радужный кот</string>

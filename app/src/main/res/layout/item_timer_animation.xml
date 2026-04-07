@@ -24,6 +24,16 @@
                 android:layout_height="152dp"
                 android:background="@color/button_color">
 
+                <ImageView
+                    android:id="@+id/animationOffPreview"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/animation_off"
+                    android:src="@drawable/ic_hide"
+                    android:tint="@color/screen_text_primary"
+                    android:visibility="gone" />
+
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/animationPreview"
                     android:layout_width="match_parent"

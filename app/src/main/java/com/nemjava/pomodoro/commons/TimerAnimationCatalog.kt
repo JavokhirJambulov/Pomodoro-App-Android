@@ -10,6 +10,7 @@ object TimerAnimationCatalog {
     private const val DEFAULT_ANIMATION_KEY = "cat"
 
     private val options = listOf(
+        TimerAnimationOption("off", R.string.animation_off, 0),
         TimerAnimationOption("cat", R.string.animation_cat, R.raw.cat),
         TimerAnimationOption("running_cat", R.string.animation_running_cat, R.raw.running_cat),
         TimerAnimationOption("rainbow_cat", R.string.animation_rainbow_cat, R.raw.rainbow_cat),

@@ -126,13 +126,17 @@ private class TimerAnimationAdapter(
 
             binding.animationPreview.cancelAnimation()
             binding.animationPreview.progress = 0f
-            LottieCompositionFactory.fromRawRes(binding.root.context, option.rawResId)
-                .addListener { composition ->
-                    if (boundAnimationKey != option.key) return@addListener
-                    binding.animationPreview.setComposition(composition)
-                    binding.animationPreview.repeatCount = LottieDrawable.INFINITE
-                    binding.animationPreview.playAnimation()
-                }
+            binding.animationPreview.isVisible = option.hasAnimation
+            binding.animationOffPreview.isVisible = !option.hasAnimation
+            if (option.hasAnimation) {
+                LottieCompositionFactory.fromRawRes(binding.root.context, option.rawResId)
+                    .addListener { composition ->
+                        if (boundAnimationKey != option.key) return@addListener
+                        binding.animationPreview.setComposition(composition)
+                        binding.animationPreview.repeatCount = LottieDrawable.INFINITE
+                        binding.animationPreview.playAnimation()
+                    }
+            }
 
             binding.animationCard.setOnClickListener {
                 onOptionSelected(option)
@@ -143,6 +147,8 @@ private class TimerAnimationAdapter(
             boundAnimationKey = null
             binding.animationPreview.cancelAnimation()
             binding.animationPreview.progress = 0f
+            binding.animationPreview.isVisible = true
+            binding.animationOffPreview.isVisible = false
         }
     }
 }

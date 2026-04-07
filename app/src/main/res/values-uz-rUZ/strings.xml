@@ -49,6 +49,7 @@
     <string name="plan_sessions_format">%1$d seans</string>
     <string name="select_timer_animation">Taymer animatsiyasini tanlang</string>
     <string name="selected">Tanlangan</string>
+    <string name="animation_off">Animatsiyasiz</string>
     <string name="animation_cat">Mushuk</string>
     <string name="animation_running_cat">Yugurayotgan mushuk</string>
     <string name="animation_rainbow_cat">Kamalak mushuk</string>

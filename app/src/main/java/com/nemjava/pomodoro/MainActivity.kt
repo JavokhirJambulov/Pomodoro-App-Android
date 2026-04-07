@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private var timerService: ForegroundTimerService? = null
     private var serviceBound = false
     private var loadedTimerAnimationKey: String? = null
+    private var isTimerAnimationEnabled = true
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -118,7 +119,12 @@ class MainActivity : AppCompatActivity() {
         if (!force && loadedTimerAnimationKey == selectedAnimation.key) return
 
         loadedTimerAnimationKey = selectedAnimation.key
+        isTimerAnimationEnabled = selectedAnimation.hasAnimation
         binding.timerAnimation.cancelAnimation()
+        if (!selectedAnimation.hasAnimation) {
+            binding.timerAnimation.visibility = View.INVISIBLE
+            return
+        }
         LottieCompositionFactory.fromRawRes(this, selectedAnimation.rawResId).addListener { composition ->
             if (loadedTimerAnimationKey != selectedAnimation.key) return@addListener
             binding.timerAnimation.setComposition(composition)
@@ -286,6 +292,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showRunningAnimation() {
+        if (!isTimerAnimationEnabled) {
+            binding.timerAnimation.visibility = View.INVISIBLE
+            return
+        }
         if (binding.timerAnimation.isInvisible) {
             binding.timerAnimation.visibility = View.VISIBLE
         }

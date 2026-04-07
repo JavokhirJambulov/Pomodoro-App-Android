@@ -7,4 +7,7 @@ data class TimerAnimationOption(
     val key: String,
     @StringRes val titleResId: Int,
     @RawRes val rawResId: Int
-)
+) {
+    val hasAnimation: Boolean
+        get() = rawResId != 0
+}

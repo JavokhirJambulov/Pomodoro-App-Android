@@ -48,6 +48,7 @@
     <string name="plan_sessions_format">%1$d sessions</string>
     <string name="session_status_format" translatable="false">%1$s • %2$d/%3$d</string>
     <string name="selected">Selected</string>
+    <string name="animation_off">No Animation</string>
     <string name="animation_cat">Cat</string>
     <string name="animation_running_cat">Running Cat</string>
     <string name="animation_rainbow_cat">Rainbow Cat</string>
