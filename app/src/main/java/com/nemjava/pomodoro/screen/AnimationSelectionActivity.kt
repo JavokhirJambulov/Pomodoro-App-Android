@@ -61,18 +61,14 @@ class AnimationSelectionActivity : AppCompatActivity() {
 
 private class TimerAnimationAdapter(
     private val options: List<TimerAnimationOption>,
-    selectedKey: String,
+    private var selectedKey: String,
     private val onOptionSelected: (TimerAnimationOption) -> Unit
 ) : RecyclerView.Adapter<TimerAnimationAdapter.TimerAnimationViewHolder>() {
 
-    private var selectedKey = selectedKey
+    private val optionIndexByKey = options.mapIndexed { index, option -> option.key to index }.toMap()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimerAnimationViewHolder {
-        val binding = ItemTimerAnimationBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+        val binding = ItemTimerAnimationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TimerAnimationViewHolder(binding)
     }
 
@@ -93,21 +89,17 @@ private class TimerAnimationAdapter(
 
     fun updateSelectedKey(newSelectedKey: String) {
         if (selectedKey == newSelectedKey) return
+        val previousSelectedKey = selectedKey
         selectedKey = newSelectedKey
-        notifyDataSetChanged()
+        optionIndexByKey[previousSelectedKey]?.let(::notifyItemChanged)
+        optionIndexByKey[newSelectedKey]?.let(::notifyItemChanged)
     }
 
-    class TimerAnimationViewHolder(
-        private val binding: ItemTimerAnimationBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    class TimerAnimationViewHolder(private val binding: ItemTimerAnimationBinding) : RecyclerView.ViewHolder(binding.root) {
 
         private var boundAnimationKey: String? = null
 
-        fun bind(
-            option: TimerAnimationOption,
-            isSelected: Boolean,
-            onOptionSelected: (TimerAnimationOption) -> Unit
-        ) {
+        fun bind(option: TimerAnimationOption, isSelected: Boolean, onOptionSelected: (TimerAnimationOption) -> Unit) {
             boundAnimationKey = option.key
             binding.animationName.text = binding.root.context.getString(option.titleResId)
             binding.selectedBadge.isVisible = isSelected
@@ -132,8 +124,11 @@ private class TimerAnimationAdapter(
                     .addListener { composition ->
                         if (boundAnimationKey != option.key) return@addListener
                         binding.animationPreview.setComposition(composition)
-                        binding.animationPreview.repeatCount = LottieDrawable.INFINITE
-                        binding.animationPreview.playAnimation()
+                        binding.animationPreview.progress = 0f
+                        if (isSelected) {
+                            binding.animationPreview.repeatCount = LottieDrawable.INFINITE
+                            binding.animationPreview.playAnimation()
+                        }
                     }
             }
 
