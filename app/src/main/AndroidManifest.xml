@@ -27,7 +27,6 @@
         <activity android:name=".screen.AnimationSelectionActivity"
             android:parentActivityName=".MainActivity"
             android:label="@string/select_timer_animation"
-            android:theme="@style/CustomActionBarTheme"
             android:screenOrientation="sensorPortrait">
         </activity>
         <service

@@ -10,7 +10,8 @@
     <string name="continue_button">Continue</string>
     <string name="stop">Stop</string>
     <string name="quit">Quit</string>
-    <string name="select_timer_animation">Select timer animation</string>
+    <string name="back" translatable="false">Back</string>
+    <string name="select_timer_animation">Timer Animation</string>
 
     <string name="timer_type_pomodoro">Currently in Pomodoro</string>
     <string name="timer_type_break">Currently in Break</string>

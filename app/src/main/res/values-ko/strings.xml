@@ -46,7 +46,7 @@
     <string name="save">저장</string>
     <string name="plan_durations_format">%1$d / %2$d / %3$d분</string>
     <string name="plan_sessions_format">%1$d회 세션</string>
-    <string name="select_timer_animation">타이머 애니메이션 선택</string>
+    <string name="select_timer_animation">타이머 애니메이션</string>
     <string name="selected">선택됨</string>
     <string name="animation_off">애니메이션 없음</string>
     <string name="animation_cat">고양이</string>

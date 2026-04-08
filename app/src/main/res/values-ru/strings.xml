@@ -47,7 +47,7 @@
     <string name="save">Сохранить</string>
     <string name="plan_durations_format">%1$d / %2$d / %3$d мин</string>
     <string name="plan_sessions_format">%1$d сеансов</string>
-    <string name="select_timer_animation">Выбрать анимацию таймера</string>
+    <string name="select_timer_animation">Анимация таймера</string>
     <string name="selected">Выбрано</string>
     <string name="animation_off">Без анимации</string>
     <string name="animation_cat">Кот</string>

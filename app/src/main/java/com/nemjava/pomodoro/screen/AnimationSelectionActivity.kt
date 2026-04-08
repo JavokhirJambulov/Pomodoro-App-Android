@@ -28,12 +28,16 @@ class AnimationSelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_animation_selection)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         val selectedKey = TimerAnimationCatalog.getSelectedOption(this).key
@@ -48,11 +52,6 @@ class AnimationSelectionActivity : AppCompatActivity() {
 
         binding.animationRecyclerView.layoutManager = GridLayoutManager(this, calculateSpanCount())
         binding.animationRecyclerView.adapter = adapter
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
     }
 
     private fun calculateSpanCount(): Int {

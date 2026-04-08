@@ -47,7 +47,7 @@
     <string name="save">Saqlash</string>
     <string name="plan_durations_format">%1$d / %2$d / %3$d daq</string>
     <string name="plan_sessions_format">%1$d seans</string>
-    <string name="select_timer_animation">Taymer animatsiyasini tanlang</string>
+    <string name="select_timer_animation">Taymer animatsiyasi</string>
     <string name="selected">Tanlangan</string>
     <string name="animation_off">Animatsiyasiz</string>
     <string name="animation_cat">Mushuk</string>
