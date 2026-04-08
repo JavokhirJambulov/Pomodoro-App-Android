@@ -116,13 +116,13 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="6dp"
                     android:src="@android:drawable/ic_lock_idle_alarm"
-                    app:tint="@color/screen_accent" />
+                    app:tint="@color/screen_text_primary" />
 
                 <TextView
                     android:id="@+id/sessionStatusText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/screen_accent"
+                    android:textColor="@color/screen_text_primary"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     tools:text="Session • 1/4" />
@@ -204,18 +204,34 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/editPlanButton"
+                    <LinearLayout
+                        android:id="@+id/editPlanAction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingVertical="4dp"
-                        android:text="@string/edit"
-                        android:textAllCaps="true"
-                        android:textColor="@color/screen_accent"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:paddingVertical="6dp">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="5dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_edit_pencil" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/edit"
+                            android:textAllCaps="true"
+                            android:textColor="@color/screen_accent"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -241,7 +257,8 @@
                         android:textColor="@color/grey800"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        tools:text="4 sessions" />
+                        tools:text="4 sessions"
+                        android:layout_gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

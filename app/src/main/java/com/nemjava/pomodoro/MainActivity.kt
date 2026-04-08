@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.quitButton.setOnClickListener { stopTimer() }
-        binding.editPlanButton.setOnClickListener { showEditTimerDialog() }
+        binding.editPlanAction.setOnClickListener { showEditTimerDialog() }
     }
 
     private fun updatePlanSummary() {
