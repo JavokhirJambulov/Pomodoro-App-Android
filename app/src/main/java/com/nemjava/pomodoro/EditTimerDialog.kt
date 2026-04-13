@@ -88,7 +88,6 @@ object EditTimerDialog {
         ) { sessions = it }
 
         val dialog = AlertDialog.Builder(activity).setView(dialogView).create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialogView.findViewById<Button>(R.id.cancelButton).setOnClickListener {
             dialog.dismiss()

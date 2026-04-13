@@ -8,5 +8,21 @@
         <item name="colorOnSecondary">@color/white</item>
         <item name="statusBarForeground" >?attr/colorPrimaryVariant</item>
         <item name="statusBarBackground">?attr/colorOnPrimary</item>
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
+        <item name="buttonStyle">@style/AppTheme.Button</item>
+        <item name="alertDialogTheme">@style/SmallDialogTheme</item>
     </style>
+
+    <style name="SmallDialogTheme" parent="@style/Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="dialogCornerRadius">20dp</item>
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
+        <item name="buttonStyle">@style/AppTheme.Button</item>
+    </style>
+
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmallInverse</item>
+    </style>
+
 </resources>
