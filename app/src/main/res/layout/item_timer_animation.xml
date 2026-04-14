@@ -7,10 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/current_plan_card_bg"
+        app:cardBackgroundColor="@color/animation_card_bg"
         app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        app:strokeColor="@color/current_plan_card_stroke"
+        app:strokeColor="@color/animation_card_stroke"
         app:strokeWidth="1dp">
 
         <LinearLayout
@@ -21,8 +20,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="152dp"
-                android:background="@color/button_color">
+                android:layout_height="152dp">
 
                 <ImageView
                     android:id="@+id/animationOffPreview"
@@ -53,7 +51,7 @@
                     android:paddingEnd="10dp"
                     android:paddingBottom="4dp"
                     android:text="@string/selected"
-                    android:textColor="@color/screen_text_primary"
+                    android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:visibility="visible" />

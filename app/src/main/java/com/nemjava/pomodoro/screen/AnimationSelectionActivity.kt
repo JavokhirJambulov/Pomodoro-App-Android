@@ -105,15 +105,9 @@ private class TimerAnimationAdapter(
             binding.selectedBadge.isVisible = isSelected
             binding.animationCard.strokeColor = ContextCompat.getColor(
                 binding.root.context,
-                if (isSelected) R.color.screen_accent else R.color.current_plan_card_stroke
+                if (isSelected) R.color.screen_accent else R.color.animation_card_stroke
             )
             binding.animationCard.strokeWidth = if (isSelected) 4 else 1
-            binding.animationCard.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    binding.root.context,
-                    if (isSelected) R.color.button_color else R.color.current_plan_card_bg
-                )
-            )
 
             binding.animationPreview.cancelAnimation()
             binding.animationPreview.progress = 0f

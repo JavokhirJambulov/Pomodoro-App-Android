@@ -30,4 +30,6 @@
 
     <color name="current_plan_card_bg">#FAF9FF</color>
     <color name="current_plan_card_stroke">#D8D0FA</color>
+    <color name="animation_card_bg">#F3F0FF</color>
+    <color name="animation_card_stroke">#646464</color>
 </resources>
