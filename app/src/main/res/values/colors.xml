@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="button_color">#E9E9FF</color>
+    <color name="button_color">#EEEAFE</color>
     <color name="grey50">#FAFAFA</color>
     <color name="grey200">#EEEEEE</color>
     <color name="grey500">#9E9E9E</color>
@@ -15,10 +15,10 @@
     <color name="grey900">#212121</color>
     <color name="grey1000">#141414</color>
     <color name="grey1200">#0A0A0A</color>
-    <color name="screen_background">#FAFAFA</color>
-    <color name="screen_text_primary">#212121</color>
-    <color name="screen_text_secondary">#424242</color>
-    <color name="screen_accent">#3700B3</color>
+    <color name="screen_background">#F7F7F5</color>
+    <color name="screen_text_primary">#1F1F1F</color>
+    <color name="screen_text_secondary">#6B6B6B</color>
+    <color name="screen_accent">#6D5DF6</color>
 
     <color name="dialog_surface">#F8F6FF</color>
     <color name="dialog_on_surface">#1F1B2D</color>
@@ -28,6 +28,6 @@
     <color name="dialog_button_primary_bg">#6F4FBD</color>
     <color name="dialog_button_primary_on">#FFFFFF</color>
 
-    <color name="current_plan_card_bg">#F3F0FF</color>
-    <color name="current_plan_card_stroke">#DED7F7</color>
+    <color name="current_plan_card_bg">#FAF9FF</color>
+    <color name="current_plan_card_stroke">#D8D0FA</color>
 </resources>

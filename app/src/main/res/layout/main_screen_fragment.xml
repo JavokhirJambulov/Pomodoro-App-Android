@@ -70,11 +70,11 @@
             android:layout_marginTop="36dp"
             android:outlineAmbientShadowColor="#FFFFFF"
             app:direction="clockwise"
-            app:dotColor="@color/white"
+            app:dotColor="@color/dialog_button_primary_bg"
             app:dotWidth="18dp"
             app:drawDot="true"
             app:enableProgressAnimation="true"
-            app:gradientEndColor="#7012CE"
+            app:gradientEndColor="@color/screen_accent"
             app:gradientType="linear"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/timerType"
             app:layout_constraintWidth_percent="0.60"
             app:progressCap="round"
-            app:progressColor="#BC8FE8"
+            app:progressColor="@color/dialog_button_primary_bg"
             app:progressStrokeWidth="12dp"
             app:startAngle="270"
             app:textColor="@color/screen_text_primary"
@@ -116,13 +116,13 @@
                     android:layout_height="13dp"
                     android:layout_marginEnd="6dp"
                     android:src="@android:drawable/ic_lock_idle_alarm"
-                    app:tint="@color/screen_text_primary" />
+                    app:tint="@color/screen_accent" />
 
                 <TextView
                     android:id="@+id/sessionStatusText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/screen_text_primary"
+                    android:textColor="@color/screen_accent"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     tools:text="Session • 1/4" />
@@ -137,6 +137,8 @@
             android:layout_marginTop="32dp"
             android:background="@drawable/bg_button_shape"
             android:text="@string/start"
+            android:textColor="@color/white"
+            app:backgroundTint="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/session_status_chip"
@@ -148,7 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/quit"
-            android:textColor="@color/screen_text_primary"
+            android:textColor="@color/screen_text_secondary"
             android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -200,7 +202,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/current_plan"
-                        android:textColor="@color/grey800"
+                        android:textColor="@color/screen_text_secondary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -245,7 +247,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/grey900"
+                        android:textColor="@color/screen_text_primary"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         tools:text="25 / 5 / 15 m" />
@@ -254,7 +256,7 @@
                         android:id="@+id/currentPlanSessions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/grey800"
+                        android:textColor="@color/screen_text_secondary"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         tools:text="4 sessions"
