@@ -11,6 +11,7 @@ import android.text.format.DateUtils
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -292,12 +293,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateActionState(timerStatus: TimerStatus) {
         val canEditPlan = timerStatus == TimerStatus.STOPPED
-        binding.actionButton.text = when (timerStatus) {
-            TimerStatus.IN_PROGRESS -> getString(R.string.pause)
-            TimerStatus.PAUSED -> getString(R.string.continue_button)
-            TimerStatus.STOPPED -> getString(R.string.start)
+        val actionDrawable = when (timerStatus) {
+            TimerStatus.IN_PROGRESS -> R.drawable.ic_baseline_pause
+            TimerStatus.PAUSED ->  R.drawable.ic_baseline_play
+            TimerStatus.STOPPED -> R.drawable.ic_baseline_play
         }
-        binding.quitButton.isVisible = timerStatus == TimerStatus.PAUSED
+        binding.actionButton.setImageDrawable(AppCompatResources.getDrawable(this,actionDrawable))
+        binding.quitButton.isVisible = timerStatus == TimerStatus.PAUSED || timerStatus == TimerStatus.IN_PROGRESS
         binding.menu.isVisible = canEditPlan
         binding.editPlanAction.isVisible = canEditPlan
     }

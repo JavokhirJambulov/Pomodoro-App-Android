@@ -144,33 +144,39 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <Button
-            android:id="@+id/action_button"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/bg_button_shape"
-            android:text="@string/start"
-            android:textColor="@color/white"
-            app:backgroundTint="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/session_status_chip"
-            app:layout_constraintWidth_percent="0.60"/>
-
-        <TextView
-            android:id="@+id/quit_button"
+        <LinearLayout
+            android:id="@+id/action_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/quit"
-            android:textColor="@color/screen_text_secondary"
-            android:textSize="18sp"
-            android:visibility="gone"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/action_button" />
+            app:layout_constraintTop_toBottomOf="@+id/session_status_chip">
+
+            <ImageButton
+                android:id="@+id/action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="15dp"
+                android:background="@drawable/bg_button_shape"
+                android:src="@drawable/ic_baseline_play"
+                app:tint="@color/white"
+                app:backgroundTint="@null"/>
+
+            <ImageButton
+                android:id="@+id/quit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/quit"
+                android:background="@drawable/bg_button_shape"
+                android:backgroundTint="@color/grey500"
+                android:src="@drawable/ic_baseline_stop"
+                android:visibility="gone"
+                app:tint="@color/white" />
+        </LinearLayout>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/timerAnimation"
@@ -178,7 +184,7 @@
             android:layout_height="0dp"
             android:padding="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quit_button"
+            app:layout_constraintTop_toBottomOf="@+id/action_container"
             app:lottie_autoPlay="false"
             app:lottie_loop="true" />
 
