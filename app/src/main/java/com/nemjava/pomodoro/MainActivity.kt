@@ -24,7 +24,6 @@ import com.nemjava.pomodoro.databinding.MainScreenFragmentBinding
 import com.nemjava.pomodoro.screen.AnimationSelectionActivity
 import com.nemjava.pomodoro.service.ForegroundTimerService
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-import androidx.core.view.isInvisible
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     private var timerService: ForegroundTimerService? = null
     private var serviceBound = false
     private var loadedTimerAnimationKey: String? = null
-    private var isTimerAnimationEnabled = true
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -119,21 +117,15 @@ class MainActivity : AppCompatActivity() {
         if (!force && loadedTimerAnimationKey == selectedAnimation.key) return
 
         loadedTimerAnimationKey = selectedAnimation.key
-        isTimerAnimationEnabled = selectedAnimation.hasAnimation
         binding.timerAnimation.cancelAnimation()
         if (!selectedAnimation.hasAnimation) {
-            binding.timerAnimation.visibility = View.INVISIBLE
+            binding.timerAnimation.setImageDrawable(null)
             return
         }
         LottieCompositionFactory.fromRawRes(this, selectedAnimation.rawResId).addListener { composition ->
             if (loadedTimerAnimationKey != selectedAnimation.key) return@addListener
             binding.timerAnimation.setComposition(composition)
-            if (currentTimerStatus == TimerStatus.IN_PROGRESS) {
-                binding.timerAnimation.visibility = View.VISIBLE
-                binding.timerAnimation.playAnimation()
-            } else {
-                binding.timerAnimation.visibility = View.INVISIBLE
-            }
+            updateTimerAnimationPlayback()
         }
     }
 
@@ -151,20 +143,6 @@ class MainActivity : AppCompatActivity() {
         }
         binding.quitButton.setOnClickListener { stopTimer() }
         binding.editPlanAction.setOnClickListener { showEditTimerDialog() }
-    }
-
-    private fun updatePlanSummary() {
-        val timerPlanSettings = currentTimerPlanSettings()
-        binding.currentPlanDurations.text = getString(
-            R.string.plan_durations_format,
-            timerPlanSettings.pomodoroMinutes.toInt(),
-            timerPlanSettings.breakMinutes.toInt(),
-            timerPlanSettings.longBreakMinutes.toInt()
-        )
-        binding.currentPlanSessions.text = getString(
-            R.string.plan_sessions_format,
-            timerPlanSettings.sessions.toInt()
-        )
     }
 
     private fun showEditTimerDialog() {
@@ -187,7 +165,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun syncPlanUiWithCurrentState() {
         val timerPlanSettings = currentTimerPlanSettings()
-        updatePlanSummary()
         if (currentTimerStatus == TimerStatus.STOPPED) {
             setProgressTime(timerPlanSettings.pomodoroMinutes * 60)
             updateSessionStatusChip(1L, timerPlanSettings.sessions)
@@ -225,7 +202,6 @@ class MainActivity : AppCompatActivity() {
         totalSessions: Long
     ) {
         val timerPlanSettings = currentTimerPlanSettings()
-        val previousTimerStatus = currentTimerStatus
         currentTimerStatus = timerStatus
         currentSessionIndex = sessionIndex
         updateSessionStatusChip(sessionIndex, totalSessions)
@@ -264,7 +240,6 @@ class MainActivity : AppCompatActivity() {
                 binding.confettiAnimation.visibility = View.VISIBLE
                 binding.confettiAnimation.progress = 0f
                 binding.confettiAnimation.playAnimation()
-                hideRunningAnimation()
             }
         }
 
@@ -272,41 +247,29 @@ class MainActivity : AppCompatActivity() {
             TimerStatus.IN_PROGRESS -> {
                 updateActionState(timerStatus)
                 binding.confettiAnimation.visibility = View.INVISIBLE
-                if (previousTimerStatus != TimerStatus.IN_PROGRESS) {
-                    loadSelectedTimerAnimation(true)
-                } else {
-                    showRunningAnimation()
-                }
+                updateTimerAnimationPlayback()
             }
 
             TimerStatus.STOPPED -> {
                 updateActionState(timerStatus)
-                hideRunningAnimation()
+                updateTimerAnimationPlayback()
             }
 
             TimerStatus.PAUSED -> {
                 updateActionState(timerStatus)
-                hideRunningAnimation()
+                updateTimerAnimationPlayback()
             }
         }
     }
 
-    private fun showRunningAnimation() {
-        if (!isTimerAnimationEnabled) {
-            binding.timerAnimation.visibility = View.INVISIBLE
-            return
+    private fun updateTimerAnimationPlayback() {
+        if (currentTimerStatus == TimerStatus.IN_PROGRESS) {
+            if (!binding.timerAnimation.isAnimating) {
+                binding.timerAnimation.playAnimation()
+            }
+        } else {
+            binding.timerAnimation.cancelAnimation()
         }
-        if (binding.timerAnimation.isInvisible) {
-            binding.timerAnimation.visibility = View.VISIBLE
-        }
-        if (!binding.timerAnimation.isAnimating) {
-            binding.timerAnimation.playAnimation()
-        }
-    }
-
-    private fun hideRunningAnimation() {
-        binding.timerAnimation.visibility = View.INVISIBLE
-        binding.timerAnimation.cancelAnimation()
     }
 
     private fun setProgressTime(time: Long) {
@@ -336,7 +299,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.quitButton.isVisible = timerStatus == TimerStatus.PAUSED
         binding.menu.isVisible = canEditPlan
-        binding.currentPlanCard.isVisible = canEditPlan
+        binding.editPlanAction.isVisible = canEditPlan
     }
 
     override fun onDestroy() {
