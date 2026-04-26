@@ -6,8 +6,10 @@
         <item name="colorSecondary">@color/purple_200</item>
         <item name="colorSecondaryVariant">@color/button_color</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="statusBarForeground" >?attr/colorPrimaryVariant</item>
-        <item name="statusBarBackground">?attr/colorOnPrimary</item>
+        <item name="android:statusBarColor">@color/screen_background</item>
+        <item name="android:navigationBarColor">@color/screen_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:buttonStyle">@style/AppTheme.Button</item>
         <item name="buttonStyle">@style/AppTheme.Button</item>
         <item name="alertDialogTheme">@style/SmallDialogTheme</item>

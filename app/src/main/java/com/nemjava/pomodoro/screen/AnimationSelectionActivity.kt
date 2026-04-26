@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.nemjava.pomodoro.R
+import com.nemjava.pomodoro.applyAppSystemBars
 import com.nemjava.pomodoro.commons.TimerAnimationCatalog
 import com.nemjava.pomodoro.commons.TimerAnimationOption
 import com.nemjava.pomodoro.databinding.ActivityAnimationSelectionBinding
@@ -29,12 +28,7 @@ class AnimationSelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_animation_selection)
         supportActionBar?.hide()
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        window.applyAppSystemBars(binding.root)
 
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
