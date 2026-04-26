@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    res/values-sw400dp/dimens.xml
+    Medium phones (~6 inch, e.g. Pixel 7, Galaxy S23).
+-->
+<resources>
+    <dimen name="text_size_timer">30sp</dimen>
+    <dimen name="text_size_body">17sp</dimen>
+    <dimen name="text_size_session">12sp</dimen>
+
+    <dimen name="circular_progress_max_size">290dp</dimen>
+</resources>

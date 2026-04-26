@@ -22,15 +22,15 @@
             app:lottie_loop="false" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/timerType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="40dp"
             android:padding="5dp"
             android:text="@string/app_name"
-            android:textColor="@color/screen_text_primary"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            android:textColor="@color/screen_text_secondary"
+            android:textSize="@dimen/text_size_body"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,14 +40,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/edit_timer"
             android:padding="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_edit_pencil"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/screen_text_primary" />
 
         <ImageButton
@@ -55,27 +55,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_palette"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/screen_text_primary" />
-
-        <TextView
-            android:id="@+id/timerType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:textColor="@color/screen_text_secondary"
-            android:textSize="18sp"
-            android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:text="Pomodoro" />
 
         <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
             android:id="@+id/circular_progress"
@@ -95,13 +82,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timerType"
-            app:layout_constraintWidth_percent="0.60"
+            app:layout_constraintWidth_max="@dimen/circular_progress_max_size"
             app:progressCap="round"
             app:progressColor="@color/dialog_button_primary_bg"
             app:progressStrokeWidth="12dp"
             app:startAngle="270"
             app:textColor="@color/screen_text_primary"
-            app:textSize="30sp" />
+            app:textSize="@dimen/text_size_timer" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/session_status_chip"
@@ -138,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/screen_accent"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/text_size_session"
                     android:textStyle="bold"
                     tools:text="Session • 1/4" />
             </LinearLayout>
@@ -148,7 +135,7 @@
             android:id="@+id/action_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/session_status_chip">
