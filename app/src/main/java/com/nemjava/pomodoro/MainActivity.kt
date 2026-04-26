@@ -7,11 +7,14 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.content.res.Configuration
 import android.text.format.DateUtils
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -119,6 +122,7 @@ class MainActivity : AppCompatActivity() {
 
         loadedTimerAnimationKey = selectedAnimation.key
         binding.timerAnimation.cancelAnimation()
+        updateTimerAnimationLayout(selectedAnimation.hasAnimation)
         if (!selectedAnimation.hasAnimation) {
             binding.timerAnimation.setImageDrawable(null)
             return
@@ -128,6 +132,37 @@ class MainActivity : AppCompatActivity() {
             binding.timerAnimation.setComposition(composition)
             updateTimerAnimationPlayback()
         }
+    }
+
+    private fun updateTimerAnimationLayout(hasAnimation: Boolean) {
+        binding.timerAnimation.isVisible = hasAnimation
+        findViewById<View?>(R.id.contentSplit) ?: return
+
+        val root = binding.root as ConstraintLayout
+        val constraintSet = ConstraintSet().apply { clone(root) }
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        if (isLandscape && hasAnimation) {
+            constraintSet.setGuidelinePercent(R.id.contentSplit, 0.36f)
+            constraintSet.setGuidelinePercent(R.id.animationSplit, 0.64f)
+            constraintSet.connect(R.id.session_status_chip, ConstraintSet.END, R.id.animationSplit, ConstraintSet.START)
+            constraintSet.connect(R.id.timerAnimation, ConstraintSet.START, R.id.animationSplit, ConstraintSet.END)
+            constraintSet.setVisibility(R.id.timerAnimation, View.VISIBLE)
+        } else if (isLandscape) {
+            constraintSet.setGuidelinePercent(R.id.contentSplit, 0.5f)
+            constraintSet.setGuidelinePercent(R.id.animationSplit, 1f)
+            constraintSet.connect(R.id.session_status_chip, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+            constraintSet.connect(R.id.timerAnimation, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.END)
+            constraintSet.setVisibility(R.id.timerAnimation, View.GONE)
+        } else if (hasAnimation) {
+            constraintSet.setGuidelinePercent(R.id.contentSplit, 0.52f)
+            constraintSet.setGuidelinePercent(R.id.animationSplit, 0.70f)
+            constraintSet.setVisibility(R.id.timerAnimation, View.VISIBLE)
+        } else {
+            constraintSet.setGuidelinePercent(R.id.contentSplit, 0.58f)
+            constraintSet.setGuidelinePercent(R.id.animationSplit, 1f)
+            constraintSet.setVisibility(R.id.timerAnimation, View.GONE)
+        }
+        constraintSet.applyTo(root)
     }
 
     private fun setupButtons() {
@@ -264,6 +299,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateTimerAnimationPlayback() {
+        if (!binding.timerAnimation.isVisible) {
+            binding.timerAnimation.cancelAnimation()
+            return
+        }
         if (currentTimerStatus == TimerStatus.IN_PROGRESS) {
             if (!binding.timerAnimation.isAnimating) {
                 binding.timerAnimation.playAnimation()

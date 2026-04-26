@@ -24,7 +24,7 @@
             android:id="@+id/timerType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:padding="5dp"
             android:text="@string/app_name"
             android:textColor="@color/screen_text_secondary"
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/edit_timer"
             android:padding="8dp"
@@ -53,8 +53,8 @@
             android:id="@+id/menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginTop="15dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:scaleType="fitCenter"
@@ -67,21 +67,20 @@
             android:id="@+id/contentSplit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.52" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.36" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/animationSplit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.70" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.64" />
 
         <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
             android:id="@+id/circular_progress"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_gravity="center"
             android:layout_margin="24dp"
             android:outlineAmbientShadowColor="#FFFFFF"
             app:direction="clockwise"
@@ -91,11 +90,12 @@
             app:enableProgressAnimation="true"
             app:gradientEndColor="@color/screen_accent"
             app:gradientType="linear"
-            app:layout_constraintBottom_toTopOf="@+id/contentSplit"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/contentSplit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timerType"
+            app:layout_constraintVertical_chainStyle="packed"
             app:progressCap="round"
             app:progressColor="@color/dialog_button_primary_bg"
             app:progressStrokeWidth="12dp"
@@ -107,13 +107,14 @@
             android:id="@+id/session_status_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             app:cardBackgroundColor="@color/button_color"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toTopOf="@+id/action_container"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/contentSplit"
+            app:layout_constraintEnd_toStartOf="@+id/animationSplit"
+            app:layout_constraintStart_toEndOf="@+id/contentSplit"
+            app:layout_constraintTop_toBottomOf="@+id/timerType"
             app:layout_constraintVertical_chainStyle="packed">
 
             <LinearLayout
@@ -141,7 +142,7 @@
                     android:textColor="@color/screen_accent"
                     android:textSize="@dimen/text_size_session"
                     android:textStyle="bold"
-                    tools:text="Session • 1/4" />
+                    tools:text="Session 1/4" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -149,10 +150,10 @@
             android:id="@+id/action_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            app:layout_constraintBottom_toTopOf="@+id/animationSplit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/session_status_chip"
+            app:layout_constraintStart_toStartOf="@+id/session_status_chip"
             app:layout_constraintTop_toBottomOf="@+id/session_status_chip">
 
             <ImageButton
@@ -160,22 +161,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="15dp"
                 android:background="@drawable/bg_button_shape"
+                android:padding="15dp"
                 android:src="@drawable/ic_baseline_play"
-                app:tint="@color/white"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null"
+                app:tint="@color/white" />
 
             <ImageButton
                 android:id="@+id/quit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:layout_marginLeft="10dp"
-                android:text="@string/quit"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/bg_button_shape"
                 android:backgroundTint="@color/grey500"
+                android:padding="15dp"
                 android:src="@drawable/ic_baseline_stop"
+                android:text="@string/quit"
                 android:visibility="gone"
                 app:tint="@color/white" />
         </LinearLayout>
@@ -187,8 +188,8 @@
             android:layout_margin="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/animationSplit"
+            app:layout_constraintStart_toEndOf="@+id/animationSplit"
+            app:layout_constraintTop_toBottomOf="@+id/timerType"
             app:lottie_autoPlay="false"
             app:lottie_loop="true" />
 

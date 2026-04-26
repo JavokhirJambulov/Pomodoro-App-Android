@@ -17,8 +17,7 @@
             android:name="com.nemjava.pomodoro.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:showOnLockScreen="true"
-            android:screenOrientation="sensorPortrait">
+            android:showOnLockScreen="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,8 +25,7 @@
         </activity>
         <activity android:name=".screen.AnimationSelectionActivity"
             android:parentActivityName=".MainActivity"
-            android:label="@string/select_timer_animation"
-            android:screenOrientation="sensorPortrait">
+            android:label="@string/select_timer_animation">
         </activity>
         <service
             android:name=".service.ForegroundTimerService"

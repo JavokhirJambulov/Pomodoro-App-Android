@@ -7,11 +7,19 @@
     app:cardElevation="2dp"
     android:orientation="vertical"
     android:padding="20dp">
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:fillViewport="false"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -364,5 +372,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
-</LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </com.google.android.material.card.MaterialCardView>
